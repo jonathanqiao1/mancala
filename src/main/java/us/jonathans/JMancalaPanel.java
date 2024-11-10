@@ -15,20 +15,29 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class JMancalaPanel extends JPanel implements MouseMotionListener {
-    final Dimension dimension = new Dimension(400, 600);
     final int[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
     final ArrayList<Hole> holes = new ArrayList<>();
     final ArrayList<Stone> stones = new ArrayList<>();
+    private JFrame mainFrame;
+    private Dimension lastSize;
 
-    public JMancalaPanel() {
+    public JMancalaPanel(JFrame frame) {
         super();
+        this.mainFrame = frame;
         this.addMouseMotionListener(this);
         this.setDoubleBuffered(true);
+        lastSize = this.getPreferredSize();
+        initSprites();
+    }
 
-        int holeRadius = this.dimension.height / 9;
+    private void initSprites() {
+        this.stones.clear();
+        this.holes.clear();
+
+        int holeRadius = getPreferredSize().height / 9;
         int holeMarginY = holeRadius / 6;
-        int col1X = this.dimension.width / 3;
-        int col2X = this.dimension.width / 3 * 2;
+        int col1X = getPreferredSize().width / 3;
+        int col2X = getPreferredSize().width / 3 * 2;
 
         for (int i = 0; i < 5 ; i++) {
             holes.add(new Hole(
@@ -88,7 +97,12 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, this.dimension.width, this.dimension.height);
+        g.fillRect(0, 0, getPreferredSize().width, getPreferredSize().height);
+
+        if (lastSize.height != getPreferredSize().height || lastSize.width != getPreferredSize().width) {
+            initSprites();
+            lastSize = getPreferredSize();
+        }
 
         Point mousePoint = this.getMousePosition();
 
@@ -120,7 +134,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
 
     @Override
     public Dimension getPreferredSize() {
-        return this.getMaximumSize();
+        return this.mainFrame.getSize();
     }
 
     @Override
