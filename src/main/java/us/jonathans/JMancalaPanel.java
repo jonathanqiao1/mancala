@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class JMancalaPanel extends JPanel implements MouseMotionListener {
-    final int[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+    final int[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
     final ArrayList<Hole> holes = new ArrayList<>();
     final ArrayList<Stone> stones = new ArrayList<>();
     private JFrame mainFrame;
@@ -39,7 +39,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
         int col1X = getPreferredSize().width / 3;
         int col2X = getPreferredSize().width / 3 * 2;
 
-        for (int i = 0; i < 5 ; i++) {
+        for (int i = 0; i < 6 ; i++) {
             holes.add(new Hole(
                     col1X,
                     i * (holeMarginY + holeRadius) + holeRadius / 2 + holeMarginY,
@@ -49,7 +49,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
                     i
             ));
         }
-        for (int i = 11; i > 6; i--) {
+        for (int i = 12; i > 6; i--) {
             holes.add(new Hole(
                     col2X,
                     (i-7) * (holeMarginY + holeRadius) + holeRadius / 2 + holeMarginY,
