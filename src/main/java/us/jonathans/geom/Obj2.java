@@ -1,7 +1,6 @@
 package us.jonathans.geom;
 
 import java.awt.*;
-import java.awt.geom.Dimension2D;
 
 public class Obj2 {
     private Dimension dimension;
@@ -53,6 +52,11 @@ public class Obj2 {
     public void drawOval(Graphics g, Color color) {
         g.setColor(color);
         g.drawOval(this.x(), this.y(), this.width(), this.height());
+    }
+
+    public void fillRect(Graphics g, Color color) {
+        g.setColor(color);
+        g.fillRect(this.x(), this.y(), this.width(), this.height());
     }
 
     public int radius() {

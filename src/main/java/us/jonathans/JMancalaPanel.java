@@ -5,6 +5,7 @@ import us.jonathans.geom.Align;
 import us.jonathans.geom.Obj2;
 import us.jonathans.geom.Vec2;
 import us.jonathans.sprites.Hole;
+import us.jonathans.sprites.SquareHole;
 import us.jonathans.sprites.Stone;
 
 import javax.swing.*;
@@ -18,6 +19,8 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
     final int[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
     final ArrayList<Hole> holes = new ArrayList<>();
     final ArrayList<Stone> stones = new ArrayList<>();
+    private SquareHole topHole;
+    private SquareHole bottomHole;
     private JFrame mainFrame;
     private Dimension lastSize;
 
@@ -34,17 +37,19 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
         this.stones.clear();
         this.holes.clear();
 
-        int holeRadius = getPreferredSize().height / 9;
-        int holeMarginY = holeRadius / 6;
-        int col1X = getPreferredSize().width / 3;
-        int col2X = getPreferredSize().width / 3 * 2;
+        int cellHeight = getPreferredSize().height / 8;
+        int holeRadius = (int) (cellHeight * 0.9 / 2);
+        int marginX = 15;
+
+        int col1X = getPreferredSize().width / 2 - holeRadius - marginX;
+        int col2X = getPreferredSize().width / 2 + holeRadius + marginX;
 
         for (int i = 0; i < 6 ; i++) {
             holes.add(new Hole(
                     col1X,
-                    i * (holeMarginY + holeRadius) + holeRadius / 2 + holeMarginY,
-                    holeRadius,
-                    holeRadius,
+                    (i + 1) * cellHeight + cellHeight / 2,
+                    holeRadius * 2,
+                    holeRadius * 2,
                     Align.CENTER,
                     i
             ));
@@ -52,9 +57,9 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
         for (int i = 12; i > 6; i--) {
             holes.add(new Hole(
                     col2X,
-                    (i-7) * (holeMarginY + holeRadius) + holeRadius / 2 + holeMarginY,
-                    holeRadius,
-                    holeRadius,
+                    (i-7+1) * (cellHeight) + cellHeight / 2,
+                    holeRadius * 2,
+                    holeRadius * 2,
                     Align.CENTER,
                     i
             ));
@@ -79,6 +84,23 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
                 );
             }
         });
+
+        this.topHole = new SquareHole(
+                getPreferredSize().width / 2,
+                cellHeight / 2,
+                cellHeight * 2,
+                cellHeight,
+                Align.CENTER,
+                -1
+        );
+        this.bottomHole = new SquareHole(
+                getPreferredSize().width / 2,
+                cellHeight * 7 + cellHeight / 2,
+                cellHeight * 2,
+                cellHeight,
+                Align.CENTER,
+                -1
+        );
     }
 
     @Override
@@ -115,6 +137,9 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
             hole.draw(g);
             g.setColor(Color.MAGENTA);
         });
+
+        topHole.draw(g);
+        bottomHole.draw(g);
 
         stones.forEach(stone -> {
             stone.draw(g);

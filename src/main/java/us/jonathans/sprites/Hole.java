@@ -6,8 +6,8 @@ import us.jonathans.geom.CircleBoundingBox;
 import java.awt.*;
 
 public class Hole extends CircleBoundingBox implements Drawable{
-    private static final Color color = Color.GRAY;
-    private static final Color hoveredColor = Color.DARK_GRAY;
+    protected static final Color color = Color.GRAY;
+    protected static final Color hoveredColor = Color.DARK_GRAY;
     private boolean hovered = false;
     private int id;
 
