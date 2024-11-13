@@ -39,6 +39,6 @@ public class LeaderboardRepository implements GetLeaderboardRepositoryInterface,
 
     @Override
     public void postLeaderboard(Leaderboard leaderboard) {
-        // Richard
+
     }
 }
