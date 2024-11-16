@@ -1,6 +1,5 @@
 package us.jonathans.sprites;
 
-import us.jonathans.drawing.ColorHelper;
 import us.jonathans.geom.Align;
 import us.jonathans.geom.CircleBoundingBox;
 import us.jonathans.geom.Obj2;
