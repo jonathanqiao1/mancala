@@ -1,4 +1,4 @@
-package us.jonathans;
+package us.jonathans.Entities;
 
 import java.util.*;
 
@@ -18,13 +18,14 @@ public class Leaderboard {
     }
 
     public Map<String, ArrayList<Integer>> getData(){
-        return data;
+        return sort("score");
     }
 
     public Map<String, ArrayList<Integer>> sort(String type) {
 
         ArrayList<Integer> listST = new ArrayList<>();
         Map<String, ArrayList<Integer>> sortedData = new LinkedHashMap<>();
+
         int typeC = 0;
 
         if (type.equalsIgnoreCase("time")) {
@@ -34,7 +35,7 @@ public class Leaderboard {
         for (Map.Entry<String, ArrayList<Integer>> entry : data.entrySet()) {
             listST.add(entry.getValue().get(typeC));
         }
-        Collections.sort(listST, Collections.reverseOrder());
+        Collections.sort(listST);
 
         for(int num : listST){
             for (Map.Entry<String, ArrayList<Integer>> entry : data.entrySet()) {

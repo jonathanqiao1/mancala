@@ -1,6 +1,6 @@
 package us.jonathans.DataAccess;
 
-import us.jonathans.Leaderboard;
+import us.jonathans.Entities.Leaderboard;
 import us.jonathans.UseCase.GetLeaderboard.GetLeaderboardRepositoryInterface;
 import us.jonathans.UseCase.PostLeaderboard.PostLeaderboardRepositoryInterface;
 
@@ -8,19 +8,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LeaderboardRepository implements GetLeaderboardRepositoryInterface, PostLeaderboardRepositoryInterface {
     private File file = new File("database.txt");
+
     public LeaderboardRepository() throws IOException {
+        // For testing purposes until Richard finishes the database
         FileWriter writer = new FileWriter(file);
-        writer.write("Mina,30,100");
+        writer.write("Mina,30,100\n");
+        writer.write("Richard,25,30\n");
+        writer.write("Ivan,35,30\n");
         writer.close();
     }
 
     @Override
     public Leaderboard getLeaderboard() {
+        // For testing purposes until Richard finishes the database
         Leaderboard leaderboard = new Leaderboard();
         Scanner reader = null;
         try {

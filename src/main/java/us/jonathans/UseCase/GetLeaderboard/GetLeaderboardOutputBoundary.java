@@ -1,12 +1,12 @@
 package us.jonathans.UseCase.GetLeaderboard;
 
-import us.jonathans.Leaderboard;
+import us.jonathans.Entities.Leaderboard;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public interface GetLeaderboardOutputBoundary {
-    Map<String, ArrayList<Integer>> getLeaderboardData(Leaderboard leaderboard);
+    String[][] getLeaderboardData(Leaderboard leaderboard);
 
     void prepareUpdateScreen(GetLeaderboardOutputData getLeaderboardOutputData);
 }
