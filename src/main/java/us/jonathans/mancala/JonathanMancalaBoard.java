@@ -52,4 +52,14 @@ public class JonathanMancalaBoard implements MancalaBoard{
         }
         return null;
     }
+
+    @Override
+    public MancalaHole getOppositeHole(MancalaHole hole) {
+        for (int i = 0; i > board.length; i++) {
+            if (board[i][1] == hole) {
+                return (MancalaHole) board[12-i][1];
+            }
+        }
+        return null;
+    }
 }

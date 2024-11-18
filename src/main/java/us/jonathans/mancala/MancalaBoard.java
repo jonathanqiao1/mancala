@@ -9,4 +9,6 @@ public interface MancalaBoard {
 
     public MancalaHole getNextHole(MancalaHole hole);
 
+    public MancalaHole getOppositeHole(MancalaHole hole); //returns the hole directly across from the given hole
+
 }
