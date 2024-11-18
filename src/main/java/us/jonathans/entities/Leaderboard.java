@@ -1,4 +1,4 @@
-package us.jonathans.Entities;
+package us.jonathans.entities;
 
 import java.util.*;
 
@@ -48,6 +48,3 @@ public class Leaderboard {
         return sortedData;
     }
 }
-
-
-

@@ -1,7 +1,7 @@
-package us.jonathans.View;
+package us.jonathans.view;
 
 import us.jonathans.Config;
-import us.jonathans.InterfaceAdapters.GetLeaderboardViewModel;
+import us.jonathans.interface_adapters.GetLeaderboardViewModel;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
@@ -9,7 +9,7 @@ import java.beans.PropertyChangeListener;
 
 public class GetLeaderboardView extends JPanel implements PropertyChangeListener{
     private final GetLeaderboardViewModel getLeaderboardViewModel;
-    private final JFrame leaderboardFrame = new JFrame(Config.leaderboardFrame);
+    private final JFrame leaderboardFrame = new JFrame(Config.LEADERBOARD_FRAME_NAME);
     private String[][] newValues = null;
 
     public GetLeaderboardView(GetLeaderboardViewModel getLeaderboardViewModel) {

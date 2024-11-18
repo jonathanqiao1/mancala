@@ -1,4 +1,4 @@
-package us.jonathans.UseCase.GetLeaderboard;
+package us.jonathans.use_case.get_leaderboard;
 
 public interface GetLeaderboardInputBoundary {
     void execute();

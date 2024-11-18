@@ -1,8 +1,8 @@
-package us.jonathans.DataAccess;
+package us.jonathans.data_access;
 
-import us.jonathans.Entities.Leaderboard;
-import us.jonathans.UseCase.GetLeaderboard.GetLeaderboardRepositoryInterface;
-import us.jonathans.UseCase.PostLeaderboard.PostLeaderboardRepositoryInterface;
+import us.jonathans.entities.Leaderboard;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardRepositoryInterface;
+import us.jonathans.use_case.post_leaderboard.PostLeaderboardRepositoryInterface;
 
 import java.io.File;
 import java.io.FileNotFoundException;

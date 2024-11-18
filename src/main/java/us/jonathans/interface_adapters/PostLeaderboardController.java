@@ -1,7 +1,7 @@
-package us.jonathans.InterfaceAdapters;
+package us.jonathans.interface_adapters;
 
-import us.jonathans.Leaderboard;
-import us.jonathans.UseCase.PostLeaderboard.PostLeaderboardInteractor;
+import us.jonathans.entities.Leaderboard;
+import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
 
 public class PostLeaderboardController {
     private final PostLeaderboardInteractor postLeaderboardInteractor;

@@ -1,6 +1,6 @@
-package us.jonathans.InterfaceAdapters;
+package us.jonathans.interface_adapters;
 
-import us.jonathans.UseCase.GetLeaderboard.GetLeaderboardInputBoundary;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardInputBoundary;
 
 public class GetLeaderboardController {
     private final GetLeaderboardInputBoundary getLeaderboardInteractor;

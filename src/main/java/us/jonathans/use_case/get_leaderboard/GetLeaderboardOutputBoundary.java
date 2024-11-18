@@ -1,9 +1,6 @@
-package us.jonathans.UseCase.GetLeaderboard;
+package us.jonathans.use_case.get_leaderboard;
 
-import us.jonathans.Entities.Leaderboard;
-
-import java.util.ArrayList;
-import java.util.Map;
+import us.jonathans.entities.Leaderboard;
 
 public interface GetLeaderboardOutputBoundary {
     String[][] getLeaderboardData(Leaderboard leaderboard);

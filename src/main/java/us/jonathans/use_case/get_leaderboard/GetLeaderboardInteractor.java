@@ -1,6 +1,6 @@
-package us.jonathans.UseCase.GetLeaderboard;
+package us.jonathans.use_case.get_leaderboard;
 
-import us.jonathans.Entities.Leaderboard;
+import us.jonathans.entities.Leaderboard;
 
 public class GetLeaderboardInteractor implements GetLeaderboardInputBoundary {
     GetLeaderboardRepositoryInterface getLeaderboardRepository;

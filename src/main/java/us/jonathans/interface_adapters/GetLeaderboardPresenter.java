@@ -1,8 +1,8 @@
-package us.jonathans.InterfaceAdapters;
+package us.jonathans.interface_adapters;
 
-import us.jonathans.Entities.Leaderboard;
-import us.jonathans.UseCase.GetLeaderboard.GetLeaderboardOutputBoundary;
-import us.jonathans.UseCase.GetLeaderboard.GetLeaderboardOutputData;
+import us.jonathans.entities.Leaderboard;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +44,4 @@ public class GetLeaderboardPresenter implements GetLeaderboardOutputBoundary {
         getLeaderboardViewModel.firePropertyChanged("leaderboard",
                 this.getLeaderboardData(getLeaderboardOutputData.getLeaderboard()));
     }
-
 }

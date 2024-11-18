@@ -1,6 +1,6 @@
-package us.jonathans.UseCase.PostLeaderboard;
+package us.jonathans.use_case.post_leaderboard;
 
-import us.jonathans.Leaderboard;
+import us.jonathans.entities.Leaderboard;
 
 public class PostLeaderboardInteractor {
     PostLeaderboardRepositoryInterface postLeaderboardRepository;
