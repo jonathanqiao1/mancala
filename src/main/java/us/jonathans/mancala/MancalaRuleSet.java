@@ -14,4 +14,6 @@ public interface MancalaRuleSet {
 
     public Boolean isGameOver(MancalaBoard board);
 
+
+
 }
