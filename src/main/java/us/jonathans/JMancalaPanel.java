@@ -1,12 +1,12 @@
 package us.jonathans;
 
-import us.jonathans.drawing.ColorHelper;
 import us.jonathans.geom.Align;
 import us.jonathans.geom.Obj2;
 import us.jonathans.geom.Vec2;
 import us.jonathans.sprites.Hole;
 import us.jonathans.sprites.SquareHole;
 import us.jonathans.sprites.Stone;
+import us.jonathans.sprites.StoneColors;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,7 +79,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
                                 stoneRadius * 2,
                                 stoneRadius * 2,
                                 Align.CENTER,
-                                ColorHelper.getRandomColor(r)
+                                StoneColors.getRandom(r)
                         )
                 );
             }
