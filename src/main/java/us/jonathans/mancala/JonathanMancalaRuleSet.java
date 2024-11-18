@@ -50,7 +50,7 @@ public class JonathanMancalaRuleSet implements MancalaRuleSet {
     }
 
     private MoveResult endingMove(MancalaBoard board, MancalaSide player, MancalaHole hole, int pastCaptured) {
-
+        return null;
     }
 
     @Override
