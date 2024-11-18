@@ -18,7 +18,6 @@ public class App implements KeyListener {
     private final JMancalaPanel mancalaPanel = new JMancalaPanel(frame);
     private GetLeaderboardViewModel getLeaderboardViewModel;
 
-
     public App() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
