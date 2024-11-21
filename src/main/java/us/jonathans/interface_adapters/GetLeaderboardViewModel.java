@@ -11,10 +11,6 @@ public class GetLeaderboardViewModel {
         this.viewName = viewName;
     }
 
-    public String getViewName() {
-        return viewName;
-    }
-
     public void firePropertyChanged(String viewName, Object newValue) {
         this.support.firePropertyChange(viewName, null, newValue);
     }
