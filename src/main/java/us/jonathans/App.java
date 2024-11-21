@@ -1,17 +1,16 @@
 package us.jonathans;
 
-import us.jonathans.DataAccess.LeaderboardRepository;
-import us.jonathans.InterfaceAdapters.GetLeaderboardController;
-import us.jonathans.InterfaceAdapters.GetLeaderboardPresenter;
-import us.jonathans.InterfaceAdapters.GetLeaderboardViewModel;
-import us.jonathans.UseCase.GetLeaderboard.GetLeaderboardInteractor;
-import us.jonathans.UseCase.GetLeaderboard.GetLeaderboardOutputBoundary;
-import us.jonathans.View.GetLeaderboardView;
+import us.jonathans.data_access.LeaderboardRepository;
+import us.jonathans.interface_adapters.GetLeaderboardController;
+import us.jonathans.interface_adapters.GetLeaderboardPresenter;
+import us.jonathans.interface_adapters.GetLeaderboardViewModel;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
+import us.jonathans.view.GetLeaderboardView;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 
 public class App implements KeyListener {
     private final JFrame frame = new JFrame(Config.APP_NAME);
@@ -53,7 +52,7 @@ public class App implements KeyListener {
 
     }
 
-    public void executeGetLeaderboard() throws IOException {
+    public void executeGetLeaderboard() {
         LeaderboardRepository repository = new LeaderboardRepository();
         getLeaderboardViewModel = new GetLeaderboardViewModel("leaderboard");
         GetLeaderboardOutputBoundary presenter = new GetLeaderboardPresenter(getLeaderboardViewModel);

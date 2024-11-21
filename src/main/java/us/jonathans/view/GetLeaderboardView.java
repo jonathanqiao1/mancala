@@ -19,12 +19,14 @@ public class GetLeaderboardView extends JPanel implements PropertyChangeListener
 
     public void displayLeaderboard(){
         String[][] values = newValues;
-        String[] columnNames = { "Username", "Score", "Time" };
+        String[] columnNames = {"Rank", "Username", "Opponent", "Score", "Time"};
         JTable leaderboardTable = new JTable(values, columnNames);
-        leaderboardTable.setBounds(30, 40, 200, 300);
-        leaderboardFrame.add(leaderboardTable);
-        leaderboardFrame.setSize(500, 200);
+        leaderboardTable.setBounds(30, 40, 1000, 400);
+        JScrollPane scrollPane = new  JScrollPane(leaderboardTable);
+        leaderboardFrame.add(scrollPane);
+        leaderboardFrame.setSize(1000, 300);
         leaderboardFrame.setVisible(true);
+        leaderboardFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
