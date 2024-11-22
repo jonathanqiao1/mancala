@@ -1,4 +1,4 @@
-package us.jonathans.interface_adapters;
+package us.jonathans.interface_adapters.get_leaderboard;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

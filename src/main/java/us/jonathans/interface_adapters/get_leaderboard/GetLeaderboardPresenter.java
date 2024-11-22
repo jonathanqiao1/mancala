@@ -1,4 +1,4 @@
-package us.jonathans.interface_adapters;
+package us.jonathans.interface_adapters.get_leaderboard;
 
 import us.jonathans.entities.Leaderboard;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
@@ -28,16 +28,16 @@ public class GetLeaderboardPresenter implements GetLeaderboardOutputBoundary {
         String username;
         String opponent;
         int score;
-        int time;
+        long time;
         int rank = 1;
 
         for (int i = 0; i < size; i++) {
             username = usernames.get(i);
             opponent = data.get(username).get(0).toString();
             score = (Integer)data.get(username).get(1);
-            time = (Integer) data.get(username).get(2);
+            time = (long) data.get(username).get(2);
 
-            Timestamp stamp = new Timestamp((long)time*1000);
+            Timestamp stamp = new Timestamp(time*1000);
             Date date = new Date(stamp.getTime());
 
             values[i][0] = String.valueOf(rank);

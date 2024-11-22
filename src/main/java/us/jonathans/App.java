@@ -1,12 +1,17 @@
 package us.jonathans;
 
 import us.jonathans.data_access.LeaderboardRepository;
-import us.jonathans.interface_adapters.GetLeaderboardController;
-import us.jonathans.interface_adapters.GetLeaderboardPresenter;
-import us.jonathans.interface_adapters.GetLeaderboardViewModel;
+import us.jonathans.interface_adapters.get_leaderboard.GetLeaderboardController;
+import us.jonathans.interface_adapters.get_leaderboard.GetLeaderboardPresenter;
+import us.jonathans.interface_adapters.get_leaderboard.GetLeaderboardViewModel;
+import us.jonathans.interface_adapters.post_leaderboard.PostLeaderboardController;
+import us.jonathans.interface_adapters.post_leaderboard.PostLeaderboardPresenter;
+import us.jonathans.interface_adapters.post_leaderboard.PostLeaderboardViewModel;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
+import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
 import us.jonathans.view.GetLeaderboardView;
+import us.jonathans.view.PostLeaderboardView;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -66,5 +71,18 @@ public class App implements KeyListener {
 
     public void leaderboardView(GetLeaderboardView view) {
         view.displayLeaderboard();
+    }
+
+    public void executePostLeaderboard() {
+        LeaderboardRepository repository = new LeaderboardRepository();
+        PostLeaderboardViewModel postLeaderboardViewModel = new PostLeaderboardViewModel("postLeaderboard");
+        PostLeaderboardPresenter postLeaderboardPresenter = new PostLeaderboardPresenter(postLeaderboardViewModel);
+        PostLeaderboardInteractor postLeaderboardInteractor =
+                new PostLeaderboardInteractor(repository, postLeaderboardPresenter);
+        PostLeaderboardController postLeaderboardController = new PostLeaderboardController(postLeaderboardInteractor);
+        PostLeaderboardView view = new PostLeaderboardView(postLeaderboardViewModel);
+
+        postLeaderboardController.execute("Bob", "Alice", 22);
+        //Place holder and for testing until actual data is provided
     }
 }
