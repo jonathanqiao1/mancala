@@ -8,6 +8,5 @@ public interface MancalaBoard {
     public void setStones(MancalaHole hole, int stones);
 
     public MancalaHole getNextHole(MancalaHole hole);
-    }
 
 }

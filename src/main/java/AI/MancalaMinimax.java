@@ -21,6 +21,7 @@ public class MancalaMinimax implements AIEngine {
             return evaluate(board, player);
         }
 
+        // CHECK PLAYER LOGIC
         // Maximizing Player's Turn
         if (isMaximizingPlayer) {
             int maxEval = Integer.MIN_VALUE;
