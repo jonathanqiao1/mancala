@@ -2,8 +2,8 @@ package us.jonathans.unit;
 
 import org.junit.Test;
 import us.jonathans.entities.Leaderboard;
-import us.jonathans.interface_adapters.GetLeaderboardPresenter;
-import us.jonathans.interface_adapters.GetLeaderboardViewModel;
+import us.jonathans.interface_adapters.get_leaderboard.GetLeaderboardPresenter;
+import us.jonathans.interface_adapters.get_leaderboard.GetLeaderboardViewModel;
 
 import java.util.Arrays;
 

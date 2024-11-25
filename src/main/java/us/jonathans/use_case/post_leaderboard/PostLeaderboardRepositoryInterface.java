@@ -1,7 +1,5 @@
 package us.jonathans.use_case.post_leaderboard;
 
-import us.jonathans.entities.Leaderboard;
-
 public interface PostLeaderboardRepositoryInterface {
-    void postLeaderboard(Leaderboard leaderboard);
+    void postLeaderboard(String username, String opponent, int score, long timestamp);
 }

@@ -1,4 +1,4 @@
-package us.jonathans.interface_adapters;
+package us.jonathans.interface_adapters.get_leaderboard;
 
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInputBoundary;
 

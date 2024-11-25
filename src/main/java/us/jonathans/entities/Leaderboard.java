@@ -9,7 +9,7 @@ public class Leaderboard {
         data = new HashMap<>();
     }
 
-    public void add(String username, String opponent, int score, int time) {
+    public void add(String username, String opponent, int score, long time) {
         ArrayList<Object> list = new ArrayList<>();
         list.add(opponent);
         list.add(score);
