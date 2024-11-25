@@ -21,6 +21,8 @@ public class App implements KeyListener {
     private final JFrame frame = new JFrame(Config.APP_NAME);
     private final JMancalaPanel mancalaPanel = new JMancalaPanel(frame);
     private GetLeaderboardViewModel getLeaderboardViewModel;
+    private PostLeaderboardViewModel postLeaderboardViewModel;
+    private GetLeaderboardView getLeaderboardView;
 
     public App() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,6 +35,8 @@ public class App implements KeyListener {
 
     public void run() {
         frame.setVisible(true);
+        addGetLeaderboardUseCase();
+        addGetLeaderboardView();
     }
 
     public void close() {
@@ -57,32 +61,33 @@ public class App implements KeyListener {
 
     }
 
-    public void executeGetLeaderboard() {
+    public void addGetLeaderboardUseCase() {
         LeaderboardRepository repository = new LeaderboardRepository();
         getLeaderboardViewModel = new GetLeaderboardViewModel("leaderboard");
         GetLeaderboardOutputBoundary presenter = new GetLeaderboardPresenter(getLeaderboardViewModel);
         GetLeaderboardInteractor interactor = new GetLeaderboardInteractor(repository, presenter);
         GetLeaderboardController controller = new GetLeaderboardController(interactor);
-        GetLeaderboardView view = new GetLeaderboardView(getLeaderboardViewModel);
 
-        controller.execute();
-        leaderboardView(view);
+        mancalaPanel.setGetLeaderboardController(controller);
     }
 
-    public void leaderboardView(GetLeaderboardView view) {
-        view.displayLeaderboard();
+    public void addGetLeaderboardView(){
+        getLeaderboardView = new GetLeaderboardView(getLeaderboardViewModel);
     }
 
-    public void executePostLeaderboard() {
+    public void addPostLeaderboardUseCase(){
         LeaderboardRepository repository = new LeaderboardRepository();
-        PostLeaderboardViewModel postLeaderboardViewModel = new PostLeaderboardViewModel("postLeaderboard");
+        postLeaderboardViewModel = new PostLeaderboardViewModel("postLeaderboard");
         PostLeaderboardPresenter postLeaderboardPresenter = new PostLeaderboardPresenter(postLeaderboardViewModel);
         PostLeaderboardInteractor postLeaderboardInteractor =
                 new PostLeaderboardInteractor(repository, postLeaderboardPresenter);
         PostLeaderboardController postLeaderboardController = new PostLeaderboardController(postLeaderboardInteractor);
+
+        // Panel.setPostLeaderboardController(postLeaderboardController)
+    }
+    public void addPostLeaderboardView() {
         PostLeaderboardView view = new PostLeaderboardView(postLeaderboardViewModel);
 
-        postLeaderboardController.execute("Bob", "Alice", 22);
-        //Place holder and for testing until actual data is provided
+        //postLeaderboardController.execute("Bob", "Alice", 22);
     }
 }

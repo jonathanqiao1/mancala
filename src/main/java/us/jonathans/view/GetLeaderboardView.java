@@ -26,12 +26,12 @@ public class GetLeaderboardView extends JPanel implements PropertyChangeListener
         leaderboardFrame.add(scrollPane);
         leaderboardFrame.setSize(1000, 300);
         leaderboardFrame.setVisible(true);
-        //leaderboardFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
         if ("leaderboard".equals(evt.getPropertyName())) {
             newValues = (String[][]) evt.getNewValue();
+            displayLeaderboard();
         }
     }
 }

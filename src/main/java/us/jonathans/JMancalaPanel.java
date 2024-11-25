@@ -3,6 +3,7 @@ package us.jonathans;
 import us.jonathans.geom.Align;
 import us.jonathans.geom.Obj2;
 import us.jonathans.geom.Vec2;
+import us.jonathans.interface_adapters.get_leaderboard.GetLeaderboardController;
 import us.jonathans.sprites.Hole;
 import us.jonathans.sprites.SquareHole;
 import us.jonathans.sprites.Stone;
@@ -23,6 +24,8 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
     private SquareHole bottomHole;
     private JFrame mainFrame;
     private Dimension lastSize;
+    private GetLeaderboardController getLeaderboardController;
+    private JButton getLeaderboardButton;
 
     public JMancalaPanel(JFrame frame) {
         super();
@@ -31,6 +34,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
         this.setDoubleBuffered(true);
         lastSize = this.getPreferredSize();
         initSprites();
+        createleaderboardButton();
     }
 
     private void initSprites() {
@@ -146,8 +150,6 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
         });
     }
 
-
-
     private Vec2 pointInsideCircle(Obj2 obj, int radius, Random r) {
         double radians = 2.0d * Math.PI * r.nextDouble(1.0d);
         double deviation = (obj.radius() - radius) * Math.sqrt(r.nextDouble(1.0d));
@@ -170,5 +172,22 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
     @Override
     public void mouseMoved(MouseEvent e) {
         repaint();
+    }
+
+    public void setGetLeaderboardController(GetLeaderboardController getLeaderboardController) {
+        this.getLeaderboardController = getLeaderboardController;
+    }
+
+    public void createleaderboardButton() {
+        getLeaderboardButton = new JButton("View Leaderboard");
+        this.add(getLeaderboardButton);
+
+        getLeaderboardButton.addActionListener(
+                evt -> {
+                    if(evt.getSource().equals(getLeaderboardButton)) {
+                        getLeaderboardController.execute();
+                    }
+                }
+        );
     }
 }
