@@ -1,12 +1,11 @@
 package us.jonathans.entity.rule;
 
 public interface MancalaBoard {
-    Iterable MancalaBoard = null;
+    int getStones(MancalaHole hole);
 
-    public int getStones(MancalaHole hole);
+    void setStones(MancalaHole hole, int stones);
 
-    public void setStones(MancalaHole hole, int stones);
+    MancalaHole getNextHole(MancalaHole hole);
 
-    public MancalaHole getNextHole(MancalaHole hole);
-
+    int[] asArray();
 }
