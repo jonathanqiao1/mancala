@@ -1,15 +1,21 @@
 package us.jonathans.app;
 
 import us.jonathans.data_access.leaderboard.LeaderboardRepository;
+import us.jonathans.data_access.match.InMemoryMatchDataAccess;
+import us.jonathans.data_access.user.InMemoryUserDataAccess;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardPresenter;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardController;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardPresenter;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardViewModel;
+import us.jonathans.interface_adapter.start_game.StartGameController;
+import us.jonathans.interface_adapter.start_game.StartGamePresenter;
+import us.jonathans.interface_adapter.start_game.StartGameViewModel;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
+import us.jonathans.use_case.start_game.StartGameInteractor;
 import us.jonathans.view.GetLeaderboardView;
 import us.jonathans.view.JMancalaPanel;
 import us.jonathans.view.PostLeaderboardView;
@@ -20,7 +26,8 @@ import java.awt.event.KeyListener;
 
 public class App implements KeyListener {
     private final JFrame frame = new JFrame(Config.APP_NAME);
-    private final JMancalaPanel mancalaPanel = new JMancalaPanel(frame);
+    private final StartGameViewModel startGameViewModel = new StartGameViewModel();
+    private final JMancalaPanel mancalaPanel = new JMancalaPanel(frame, startGameViewModel);
     private GetLeaderboardViewModel getLeaderboardViewModel;
     private PostLeaderboardViewModel postLeaderboardViewModel;
     private GetLeaderboardView getLeaderboardView;
@@ -38,6 +45,7 @@ public class App implements KeyListener {
         frame.setVisible(true);
         addGetLeaderboardUseCase();
         addGetLeaderboardView();
+        addStartGameUseCase();
     }
 
     public void close() {
@@ -90,5 +98,17 @@ public class App implements KeyListener {
         PostLeaderboardView view = new PostLeaderboardView(postLeaderboardViewModel);
 
         //postLeaderboardController.execute("Bob", "Alice", 22);
+    }
+
+    public void addStartGameUseCase() {
+        mancalaPanel.setStartGameController(
+                new StartGameController(
+                        new StartGameInteractor(
+                                InMemoryMatchDataAccess.getInstance(),
+                                InMemoryUserDataAccess.getInstance(),
+                                new StartGamePresenter(startGameViewModel)
+                        )
+                )
+        );
     }
 }
