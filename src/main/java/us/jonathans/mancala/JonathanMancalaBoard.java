@@ -29,7 +29,7 @@ public class JonathanMancalaBoard implements MancalaBoard{
 
     @Override
     public int getStones(MancalaHole hole) {
-        for (int i = 0; i > board.length; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (board[i][1] == hole) {
                 return (int) board[i][0];
             }
@@ -48,7 +48,7 @@ public class JonathanMancalaBoard implements MancalaBoard{
 
     @Override
     public MancalaHole getNextHole(MancalaHole hole) {
-        for (int i = 0; i > board.length; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (board[i][1] == hole) {
                 return (MancalaHole) board[(i + 1) % 14][1];
             }
@@ -58,7 +58,7 @@ public class JonathanMancalaBoard implements MancalaBoard{
 
     @Override
     public MancalaHole getOppositeHole(MancalaHole hole) {
-        for (int i = 0; i > board.length; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (board[i][1] == hole) {
                 return (MancalaHole) board[12-i][1];
             }
@@ -68,9 +68,10 @@ public class JonathanMancalaBoard implements MancalaBoard{
 
     @Override
     public MancalaBoard clone() {
-        Object[][] cloneBoard = board.clone();
         JonathanMancalaBoard clone = new JonathanMancalaBoard(4);
-        clone.board = cloneBoard;
+        for (int i = 0; i < board.length; i++) {
+            clone.board[i] = board[i].clone();
+        }
         return clone;
     }
 }
