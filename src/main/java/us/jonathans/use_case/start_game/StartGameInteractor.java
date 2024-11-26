@@ -1,6 +1,6 @@
 package us.jonathans.use_case.start_game;
 
-import us.jonathans.data_access.GameDataAccessInterface;
+import us.jonathans.data_access.game.GameDataAccessInterface;
 
 public class StartGameInteractor implements StartGameInputBoundary {
     private final GameDataAccessInterface gameDataAccessObject;

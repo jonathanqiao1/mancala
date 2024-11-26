@@ -1,6 +1,6 @@
 package us.jonathans.view;
 
-import us.jonathans.interface_adapters.post_leaderboard.PostLeaderboardViewModel;
+import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardViewModel;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;

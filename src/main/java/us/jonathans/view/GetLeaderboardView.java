@@ -1,7 +1,7 @@
 package us.jonathans.view;
 
-import us.jonathans.Config;
-import us.jonathans.interface_adapters.get_leaderboard.GetLeaderboardViewModel;
+import us.jonathans.app.Config;
+import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;

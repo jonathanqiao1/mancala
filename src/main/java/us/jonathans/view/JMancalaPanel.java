@@ -1,13 +1,13 @@
-package us.jonathans;
+package us.jonathans.view;
 
-import us.jonathans.geom.Align;
-import us.jonathans.geom.Obj2;
-import us.jonathans.geom.Vec2;
-import us.jonathans.interface_adapters.get_leaderboard.GetLeaderboardController;
-import us.jonathans.sprites.Hole;
-import us.jonathans.sprites.SquareHole;
-import us.jonathans.sprites.Stone;
-import us.jonathans.sprites.StoneColors;
+import us.jonathans.entity.rendering.geometry.Obj2;
+import us.jonathans.entity.rendering.geometry.Vec2;
+import us.jonathans.entity.rendering.geometry.Align;
+import us.jonathans.entity.rendering.sprite.Hole;
+import us.jonathans.entity.rendering.sprite.SquareHole;
+import us.jonathans.entity.rendering.sprite.Stone;
+import us.jonathans.entity.rendering.sprite.StoneColors;
+import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 
 import javax.swing.*;
 import java.awt.*;

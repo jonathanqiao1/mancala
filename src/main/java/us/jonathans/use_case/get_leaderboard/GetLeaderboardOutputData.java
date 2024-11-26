@@ -1,6 +1,6 @@
 package us.jonathans.use_case.get_leaderboard;
 
-import us.jonathans.entities.Leaderboard;
+import us.jonathans.entity.leaderboard.Leaderboard;
 
 public class GetLeaderboardOutputData {
     private final Leaderboard leaderboard;
