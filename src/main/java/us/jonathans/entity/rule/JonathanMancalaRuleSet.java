@@ -6,6 +6,7 @@ import java.util.Set;
 public class JonathanMancalaRuleSet implements MancalaRuleSet {
     @Override
     public MoveResult makeMove(MancalaBoard board, MancalaSide player, MancalaHole hole){
+        int stones = board.getStones(hole);
         if (!getLegalMoves(board, player).contains(hole)) {
             return new MoveResult(0, false, false);
         }
@@ -19,27 +20,26 @@ public class JonathanMancalaRuleSet implements MancalaRuleSet {
         }
 
         if (player == MancalaSide.PLAYER1) {
-            int stones = board.getStones(hole);
             board.setStones(hole, 0);
-            for (int i = stones; i > 0; i--) {
+            while (stones > 0) {
                 hole = board.getNextHole(hole);
                 if (hole == MancalaHole.g) {
-                    i++;
+                    continue;
                 }
                 else {
                     board.setStones(hole, board.getStones(hole) + 1);
+                    stones--;
                 }
             }
         } else if (player == MancalaSide.PlAYER2) {
-            int stones = board.getStones(hole);
             board.setStones(hole, 0);
-            for (int i = stones; i > 0; i--) {
+            while (stones > 0) {
                 hole = board.getNextHole(hole);
                 if (hole == MancalaHole.G) {
-                    i++;
                 }
                 else {
                     board.setStones(hole, board.getStones(hole) + 1);
+                    stones--;
                 }
             }
         }
@@ -116,7 +116,7 @@ public class JonathanMancalaRuleSet implements MancalaRuleSet {
             };
             return holes;
         }
-        return null;
+        return new MancalaHole[0];
     }
 
     @Override
@@ -125,8 +125,10 @@ public class JonathanMancalaRuleSet implements MancalaRuleSet {
         if (isGameOver(board)) {
             if (board.getStones(MancalaHole.g) < board.getStones(MancalaHole.G)) {
                 return MancalaSide.PLAYER1;
+            } else if (board.getStones(MancalaHole.G) < board.getStones(MancalaHole.g)) {
+                return MancalaSide.PlAYER2;
             }
-            return MancalaSide.PlAYER2;
+            return null;
         }
         return null;
     }

@@ -74,4 +74,8 @@ public class JonathanMancalaBoard implements MancalaBoard{
         }
         return clone;
     }
+
+    public Object[][] getBoard() {
+        return board;
+    }
 }

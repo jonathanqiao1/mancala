@@ -1,7 +1,10 @@
-package us.jonathans.mancala;
+package us.jonathans.unit.rule;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import us.jonathans.entity.rule.JonathanMancalaBoard;
+import us.jonathans.entity.rule.MancalaBoard;
+import us.jonathans.entity.rule.MancalaHole;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,7 +35,7 @@ private MancalaHole hole;
                 4,
                 0
         };
-        for (int i = 0; i < board.board.length; i++) {
+        for (int i = 0; i < board.getBoard().length; i++) {
             assertEquals(board.getStones(hole), correct[i]);
             hole = board.getNextHole(hole);
         }
@@ -41,8 +44,8 @@ private MancalaHole hole;
     @Test
     void setStones() {
         MancalaHole hole = MancalaHole.A;
-        board.setStones(hole, 0);
-        assertEquals(board.getStones(hole), 0);
+        board.setStones(hole, 10);
+        assertEquals(board.getStones(hole), 10);
     }
 
     @Test
@@ -64,5 +67,12 @@ private MancalaHole hole;
         assertNotEquals(board, clone);
         board.setStones(hole, 20);
         assertNotEquals(20, clone.getStones(hole));
+    }
+
+    @Test
+    void testEmptyBoard() {
+        assertEquals(board.getStones(null), 0);
+        assertEquals(board.getOppositeHole(null), null);
+        assertEquals(board.getNextHole(null), null);
     }
 }
