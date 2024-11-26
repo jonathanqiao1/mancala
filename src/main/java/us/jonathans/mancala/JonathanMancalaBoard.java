@@ -29,9 +29,9 @@ public class JonathanMancalaBoard implements MancalaBoard{
 
     @Override
     public int getStones(MancalaHole hole) {
-        for (int i = 0; i < board.length; i++) {
-            if (board[i][1] == hole) {
-                return (int) board[i][0];
+        for (Object[] objects : board) {
+            if (objects[1] == hole) {
+                return (int) objects[0];
             }
         }
         return 0;

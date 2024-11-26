@@ -82,6 +82,7 @@ public class JonathanMancalaRuleSet implements MancalaRuleSet {
         HashSet<MancalaHole> legalMoves = new HashSet<>();
         if (player == MancalaSide.PLAYER1) {
             for (int i = 0; i < 6; i++) {
+                assert getHoles(player) != null;
                 if (board.getStones(getHoles(player)[i]) > 0) {
                     legalMoves.add(getHoles(player)[i]);
                 }
