@@ -1,4 +1,4 @@
-package us.jonathans.geom;
+package us.jonathans.entity.geom;
 
 public enum Align {
     TOP_LEFT,

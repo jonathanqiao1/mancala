@@ -1,8 +1,8 @@
-package us.jonathans.sprites;
+package us.jonathans.entity.sprites;
 
-import us.jonathans.geom.Align;
-import us.jonathans.geom.CircleBoundingBox;
-import us.jonathans.geom.Obj2;
+import us.jonathans.entity.geom.Align;
+import us.jonathans.entity.geom.CircleBoundingBox;
+import us.jonathans.entity.geom.Obj2;
 
 import java.awt.*;
 

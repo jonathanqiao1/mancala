@@ -1,4 +1,4 @@
-package us.jonathans.sprites;
+package us.jonathans.entity.sprites;
 
 import java.awt.*;
 

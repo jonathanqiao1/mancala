@@ -7,8 +7,10 @@ import us.jonathans.interface_adapters.GetLeaderboardViewModel;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
 import us.jonathans.view.GetLeaderboardView;
+import us.jonathans.view.JMancalaPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

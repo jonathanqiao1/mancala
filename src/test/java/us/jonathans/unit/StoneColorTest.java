@@ -1,7 +1,7 @@
 package us.jonathans.unit;
 
 import org.junit.jupiter.api.Test;
-import us.jonathans.sprites.StoneColors;
+import us.jonathans.entity.sprites.StoneColors;
 
 import java.util.Random;
 

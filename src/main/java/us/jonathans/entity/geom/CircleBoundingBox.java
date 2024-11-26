@@ -1,4 +1,4 @@
-package us.jonathans.geom;
+package us.jonathans.entity.geom;
 
 public class CircleBoundingBox extends Obj2{
     public CircleBoundingBox(int x, int y, int width, int height, Align align) {

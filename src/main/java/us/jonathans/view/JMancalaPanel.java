@@ -1,12 +1,12 @@
-package us.jonathans;
+package us.jonathans.view;
 
-import us.jonathans.geom.Align;
-import us.jonathans.geom.Obj2;
-import us.jonathans.geom.Vec2;
-import us.jonathans.sprites.Hole;
-import us.jonathans.sprites.SquareHole;
-import us.jonathans.sprites.Stone;
-import us.jonathans.sprites.StoneColors;
+import us.jonathans.entity.geom.Align;
+import us.jonathans.entity.geom.Obj2;
+import us.jonathans.entity.geom.Vec2;
+import us.jonathans.entity.sprites.Hole;
+import us.jonathans.entity.sprites.SquareHole;
+import us.jonathans.entity.sprites.Stone;
+import us.jonathans.entity.sprites.StoneColors;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package us.jonathans.sprites;
+package us.jonathans.entity.sprites;
 
-import us.jonathans.geom.Align;
+import us.jonathans.entity.geom.Align;
 
 import java.awt.*;
 
