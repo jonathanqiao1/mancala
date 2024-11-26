@@ -1,11 +1,11 @@
-package AI;
+package us.jonathans.entities.engine;
 
 import us.jonathans.mancala.MancalaBoard;
 import us.jonathans.mancala.MancalaHole;
 import us.jonathans.mancala.MancalaRuleSet;
 import us.jonathans.mancala.MancalaSide;
 
-public class MancalaMinimax implements AIEngine {
+public class MancalaMinimax implements Engine {
     private final MancalaRuleSet rules;
     private final int maxDepth;
 
