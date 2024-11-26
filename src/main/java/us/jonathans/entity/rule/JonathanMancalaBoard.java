@@ -1,11 +1,14 @@
 package us.jonathans.entity.rule;
 
 public class JonathanMancalaBoard implements MancalaBoard{
+    private final Object[][] board;
 
-    Object[][] board = getBoardPosition(4);
+    public JonathanMancalaBoard() {
+        this.board = getBoardPosition(4);
+    }
 
     private static Object[][] getBoardPosition(int startNum) {
-        Object[][] board = {
+        return new Object[][]{
                 {startNum, MancalaHole.A},
                 {startNum, MancalaHole.B},
                 {startNum, MancalaHole.C},
@@ -21,7 +24,6 @@ public class JonathanMancalaBoard implements MancalaBoard{
                 {startNum, MancalaHole.f},
                 {0, MancalaHole.g}
         };
-        return board;
     }
 
     @Override
@@ -51,5 +53,14 @@ public class JonathanMancalaBoard implements MancalaBoard{
             }
         }
         return null;
+    }
+
+    @Override
+    public int[] asArray() {
+        final int[] array = new int[14];
+        for (int i = 0; i < 14; i++) {
+            array[i] = (int) board[i][0];
+        }
+        return array;
     }
 }
