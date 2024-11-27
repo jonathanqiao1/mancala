@@ -8,16 +8,23 @@ import us.jonathans.entity.rendering.sprite.SquareHole;
 import us.jonathans.entity.rendering.sprite.Stone;
 import us.jonathans.entity.rendering.sprite.StoneColors;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
+import us.jonathans.interface_adapter.start_game.StartGameController;
+import us.jonathans.interface_adapter.start_game.StartGameState;
+import us.jonathans.interface_adapter.start_game.StartGameViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class JMancalaPanel extends JPanel implements MouseMotionListener {
-    final int[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+public class JMancalaPanel extends JPanel implements MouseMotionListener, PropertyChangeListener {
+    private final StartGameViewModel startGameViewModel;
+    private final String viewName = "mancala_panel";
+    int[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
     final ArrayList<Hole> holes = new ArrayList<>();
     final ArrayList<Stone> stones = new ArrayList<>();
     private SquareHole topHole;
@@ -26,15 +33,20 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
     private Dimension lastSize;
     private GetLeaderboardController getLeaderboardController;
     private JButton getLeaderboardButton;
+    private StartGameController startGameController;
+    private JButton createStartGameButton;
 
-    public JMancalaPanel(Container frame) {
+    public JMancalaPanel(Container frame, StartGameViewModel startGameViewModel) {
         super();
+        this.startGameViewModel = startGameViewModel;
+        this.startGameViewModel.addPropertyChangeListener(this);
         this.parent = frame;
         this.addMouseMotionListener(this);
         this.setDoubleBuffered(true);
         lastSize = this.getPreferredSize();
         initSprites();
         createleaderboardButton();
+        createStartGameButton();
     }
 
     private void initSprites() {
@@ -189,5 +201,34 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
                     }
                 }
         );
+    }
+
+    public void createStartGameButton() {
+        createStartGameButton = new JButton("Start Game");
+        this.add(createStartGameButton);
+
+        createStartGameButton.addActionListener(
+                evt -> {
+                    if(evt.getSource().equals(createStartGameButton)) {
+                        startGameController.execute("a", "b", "c");
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        final StartGameState state = (StartGameState) evt.getNewValue();
+        this.board = state.getBoard();
+        initSprites();
+        repaint();
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    public void setStartGameController(StartGameController controller) {
+        this.startGameController = controller;
     }
 }
