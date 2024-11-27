@@ -56,7 +56,18 @@ public class StartGameInteractor implements StartGameInputBoundary {
         }
     }
 
-    public boolean isValidPhoneNumber(String phoneNumber) {
-        return phoneNumber.startsWith("1");
+    public static boolean isValidPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            return false;
+        }
+
+        String strippedNumber = phoneNumber.replaceAll("[+\\-()\\s]", "");
+
+        if (!strippedNumber.matches("\\d+")) {
+            return false;
+        }
+
+        int length = strippedNumber.length();
+        return length == 10 || length == 11;
     }
 }
