@@ -1,8 +1,6 @@
 package us.jonathans.entity.rule;
 
 public interface MancalaBoard {
-    MancalaHole getNextHole(MancalaHole hole);
-
     int getStones(MancalaHole hole);
 
     void setStones(MancalaHole hole, int stones);

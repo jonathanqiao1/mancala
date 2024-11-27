@@ -1,9 +1,9 @@
 package us.jonathans.entities.engine;
 
-import us.jonathans.mancala.MancalaBoard;
-import us.jonathans.mancala.MancalaHole;
-import us.jonathans.mancala.MancalaRuleSet;
-import us.jonathans.mancala.MancalaSide;
+import us.jonathans.entity.rule.MancalaBoard;
+import us.jonathans.entity.rule.MancalaHole;
+import us.jonathans.entity.rule.MancalaRuleSet;
+import us.jonathans.entity.rule.MancalaSide;
 
 public class MancalaMinimax implements Engine {
     private final MancalaRuleSet rules;
@@ -50,6 +50,7 @@ public class MancalaMinimax implements Engine {
     }
 
     // Finds the best move for the current player
+    @Override
     public MancalaHole findBestMove(MancalaBoard board, MancalaSide player) {
         MancalaHole bestMove = null;
         int bestValue = Integer.MIN_VALUE;

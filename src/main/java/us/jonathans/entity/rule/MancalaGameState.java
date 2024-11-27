@@ -7,17 +7,16 @@ import java.util.UUID;
  */
 public class MancalaGameState {
     private final UUID id;
-    private final GameBoard gameBoard;
+    private final MancalaBoard gameBoard;
 
 
-    public GameBoard getGameBoard() {
+    public MancalaBoard getGameBoard() {
         return this.gameBoard;
-
     }
 
     public MancalaGameState() {
         this.id = UUID.randomUUID();
-        this.gameBoard = new GameBoard();
+        this.gameBoard = new JonathanMancalaBoard(4);
     }
 
     public UUID getId() {

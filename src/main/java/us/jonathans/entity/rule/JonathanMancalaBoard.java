@@ -62,6 +62,7 @@ public class JonathanMancalaBoard implements MancalaBoard{
             array[i] = (int) board[i][0];
         }
         return array;
+    }
 
   public MancalaHole getOppositeHole(MancalaHole hole) {
         for (int i = 0; i < board.length; i++) {
