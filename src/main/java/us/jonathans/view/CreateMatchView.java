@@ -101,7 +101,12 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
         });
 
         startMatchButton.addActionListener(e -> {
-            startGameController.execute("1", "1", "1");
+            startGameController.execute(
+                    usernameInputLabel.getText(),
+                    phoneInputField.getText(),
+                    usePhoneCheckbox.isSelected(),
+                    (String) selectEngineDropdown.getSelectedItem()
+            );
         });
     }
 
