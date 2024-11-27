@@ -3,8 +3,8 @@ package us.jonathans.entity.rule;
 public class JonathanMancalaBoard implements MancalaBoard{
     private final Object[][] board;
 
-    public JonathanMancalaBoard() {
-        this.board = getBoardPosition(4);
+    public JonathanMancalaBoard(int startStones) {
+        board = getBoardPosition(startStones);
     }
 
     private static Object[][] getBoardPosition(int startNum) {
@@ -28,9 +28,9 @@ public class JonathanMancalaBoard implements MancalaBoard{
 
     @Override
     public int getStones(MancalaHole hole) {
-        for (int i = 0; i > board.length; i++) {
-            if (board[i][1] == hole) {
-                return (int) board[i][0];
+        for (Object[] objects : board) {
+            if (objects[1] == hole) {
+                return (int) objects[0];
             }
         }
         return 0;
@@ -38,7 +38,7 @@ public class JonathanMancalaBoard implements MancalaBoard{
 
     @Override
     public void setStones(MancalaHole hole, int stones) {
-        for (int i = 0; i > board.length; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (board[i][1] == hole) {
                 board[i][0] = stones;
             }
@@ -47,7 +47,7 @@ public class JonathanMancalaBoard implements MancalaBoard{
 
     @Override
     public MancalaHole getNextHole(MancalaHole hole) {
-        for (int i = 0; i > board.length; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (board[i][1] == hole) {
                 return (MancalaHole) board[(i + 1) % 14][1];
             }
@@ -62,5 +62,26 @@ public class JonathanMancalaBoard implements MancalaBoard{
             array[i] = (int) board[i][0];
         }
         return array;
+
+  public MancalaHole getOppositeHole(MancalaHole hole) {
+        for (int i = 0; i < board.length; i++) {
+            if (board[i][1] == hole) {
+                return (MancalaHole) board[12-i][1];
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public MancalaBoard clone() {
+        JonathanMancalaBoard clone = new JonathanMancalaBoard(4);
+        for (int i = 0; i < board.length; i++) {
+            clone.board[i] = board[i].clone();
+        }
+        return clone;
+    }
+
+    public Object[][] getBoard() {
+        return board;
     }
 }
