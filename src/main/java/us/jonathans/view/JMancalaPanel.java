@@ -182,8 +182,10 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final StartGameState state = (StartGameState) evt.getNewValue();
-        this.board = state.getBoard();
-        initSprites();
-        repaint();
+        if (state.isSuccessful()) {
+            this.board = state.getBoard();
+            initSprites();
+            repaint();
+        }
     }
 }

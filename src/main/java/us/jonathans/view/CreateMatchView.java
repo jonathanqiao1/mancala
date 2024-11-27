@@ -6,10 +6,7 @@ import us.jonathans.interface_adapter.start_game.StartGameViewModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -21,6 +18,7 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
     private final JTextField phoneInputField;
     private final JComboBox<String> selectEngineDropdown;
     private final JTextField usernameInputField;
+    private final JLabel failReasonLabel;
 
     public CreateMatchView(
             StartGameController startGameController,
@@ -77,8 +75,16 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
         add(selectEngineLabel, gbc7);
         add(selectEngineDropdown, gbc8);
 
+        failReasonLabel = new JLabel();
+        GridBagConstraints gbc10 = new GridBagConstraints();
+        gbc10.gridy = 2;
+        gbc10.fill = GridBagConstraints.HORIZONTAL;
+        gbc10.gridwidth = 4;
+        gbc10.anchor = GridBagConstraints.CENTER;
+        add(failReasonLabel, gbc10);
+
         GridBagConstraints gbc9 = new GridBagConstraints();
-        gbc9.gridy = 2;
+        gbc9.gridy = 3;
         gbc9.fill = GridBagConstraints.HORIZONTAL;
         gbc9.gridwidth = 4;
 
@@ -114,12 +120,17 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getNewValue() instanceof StartGameState) {
             StartGameState startGameState = (StartGameState) evt.getNewValue();
-            cancelMatchButton.setEnabled(true);
-            startMatchButton.setEnabled(false);
-            usePhoneCheckbox.setEnabled(false);
-            phoneInputField.setEnabled(false);
-            selectEngineDropdown.setEnabled(false);
-            usernameInputField.setEnabled(false);
+            if (startGameState.isSuccessful()) {
+                cancelMatchButton.setEnabled(true);
+                startMatchButton.setEnabled(false);
+                usePhoneCheckbox.setEnabled(false);
+                phoneInputField.setEnabled(false);
+                selectEngineDropdown.setEnabled(false);
+                usernameInputField.setEnabled(false);
+                failReasonLabel.setText("");
+            } else {
+                failReasonLabel.setText(startGameState.getFailReason());
+            }
         }
     }
 }

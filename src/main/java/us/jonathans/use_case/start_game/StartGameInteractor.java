@@ -32,7 +32,7 @@ public class StartGameInteractor implements StartGameInputBoundary {
                     usePhoneNumber,
                     engineId,
                     null,
-                    true,
+                    false,
                     "The phone number is invalid."
             );
             startGamePresenter.prepareSuccessView(startGameOutputData);
