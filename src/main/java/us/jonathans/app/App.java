@@ -12,9 +12,11 @@ import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
 import us.jonathans.view.GetLeaderboardView;
 import us.jonathans.view.JMancalaPanel;
+import us.jonathans.view.MainView;
 import us.jonathans.view.PostLeaderboardView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -28,8 +30,13 @@ public class App implements KeyListener {
     public App() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setUndecorated(true);
-        frame.setContentPane(mancalaPanel);
+//        frame.setUndecorated(true);
+//        frame.setContentPane(mancalaPanel);
+        JPanel mainView = new MainView();
+//        mainView.setLayout(new BorderLayout());
+        mainView.setBackground(Color.GRAY);
+        frame.setContentPane(mainView);
+
         frame.addKeyListener(this);
     }
 
