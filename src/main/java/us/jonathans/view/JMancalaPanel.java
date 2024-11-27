@@ -22,14 +22,14 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
     final ArrayList<Stone> stones = new ArrayList<>();
     private SquareHole topHole;
     private SquareHole bottomHole;
-    private JFrame mainFrame;
+    private Container parent;
     private Dimension lastSize;
     private GetLeaderboardController getLeaderboardController;
     private JButton getLeaderboardButton;
 
-    public JMancalaPanel(JFrame frame) {
+    public JMancalaPanel(Container frame) {
         super();
-        this.mainFrame = frame;
+        this.parent = frame;
         this.addMouseMotionListener(this);
         this.setDoubleBuffered(true);
         lastSize = this.getPreferredSize();
@@ -41,7 +41,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
         this.stones.clear();
         this.holes.clear();
 
-        int cellHeight = getPreferredSize().height / 8;
+        int cellHeight = (getPreferredSize().height - 50) / 8;
         int holeRadius = (int) (cellHeight * 0.9 / 2);
         int marginX = 15;
 
@@ -122,7 +122,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
-        g.setColor(Color.BLACK);
+        g.setColor(new Color(45, 42, 46));
         g.fillRect(0, 0, getPreferredSize().width, getPreferredSize().height);
 
         if (lastSize.height != getPreferredSize().height || lastSize.width != getPreferredSize().width) {
@@ -161,7 +161,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
 
     @Override
     public Dimension getPreferredSize() {
-        return this.mainFrame.getSize();
+        return this.parent.getSize();
     }
 
     @Override
@@ -180,7 +180,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener {
 
     public void createleaderboardButton() {
         getLeaderboardButton = new JButton("View Leaderboard");
-        this.add(getLeaderboardButton);
+//        this.add(getLeaderboardButton);
 
         getLeaderboardButton.addActionListener(
                 evt -> {
