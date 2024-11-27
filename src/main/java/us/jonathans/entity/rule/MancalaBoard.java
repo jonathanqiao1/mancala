@@ -1,6 +1,7 @@
 package us.jonathans.entity.rule;
 
 public interface MancalaBoard {
+    MancalaHole getNextHole(MancalaHole hole);
 
     int getStones(MancalaHole hole);
 
@@ -12,4 +13,5 @@ public interface MancalaBoard {
 
     MancalaBoard clone(); // returns a clone of the board
 
+    int[] asArray();
 }
