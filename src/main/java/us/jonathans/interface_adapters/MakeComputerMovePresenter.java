@@ -1,8 +1,7 @@
 package us.jonathans.interface_adapters;
 
-import us.jonathans.mancala.MancalaBoard;
-import us.jonathans.mancala.MancalaHole;
-import us.jonathans.mancala.MancalaSide;
+import us.jonathans.entity.rule.MancalaBoard;
+import us.jonathans.entity.rule.MancalaHole;
 import us.jonathans.use_case.makeComputerMove.MakeComputerMoveOutputBoundary;
 import us.jonathans.view.MakeComputerMoveView;
 
