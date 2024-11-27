@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -197,7 +198,13 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         getLeaderboardButton.addActionListener(
                 evt -> {
                     if(evt.getSource().equals(getLeaderboardButton)) {
-                        getLeaderboardController.execute();
+                        try {
+                            getLeaderboardController.execute();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         );

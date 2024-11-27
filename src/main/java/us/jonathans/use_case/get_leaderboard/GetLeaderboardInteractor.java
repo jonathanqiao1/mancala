@@ -2,6 +2,8 @@ package us.jonathans.use_case.get_leaderboard;
 
 import us.jonathans.entity.leaderboard.Leaderboard;
 
+import java.io.IOException;
+
 public class GetLeaderboardInteractor implements GetLeaderboardInputBoundary {
     GetLeaderboardRepositoryInterface getLeaderboardRepository;
     GetLeaderboardOutputBoundary getLeaderboardPresenter;
@@ -12,11 +14,11 @@ public class GetLeaderboardInteractor implements GetLeaderboardInputBoundary {
         this.getLeaderboardPresenter = getLeaderboardOutputBoundary;
     }
 
-    public Leaderboard getLeaderboard() {
+    public Leaderboard getLeaderboard() throws IOException, InterruptedException {
         return getLeaderboardRepository.getLeaderboard();
     }
 
-    public void execute(){
+    public void execute() throws IOException, InterruptedException {
         GetLeaderboardOutputData getLeaderboardOutputData = new
                 GetLeaderboardOutputData(getLeaderboardRepository.getLeaderboard());
         getLeaderboardPresenter.prepareUpdateScreen(getLeaderboardOutputData);
