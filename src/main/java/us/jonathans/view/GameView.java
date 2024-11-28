@@ -8,9 +8,9 @@ import java.awt.*;
 public class GameView extends JPanel {
     private final static String viewName = "Game";
 
-    public GameView() {
+    public GameView(StartGameViewModel startGameViewModel) {
         setBorder(BorderFactory.createTitledBorder(viewName));
         setLayout(new GridLayout());
-        add(new JMancalaPanel(this, new StartGameViewModel()));
+        add(new JMancalaPanel(this, startGameViewModel));
     }
 }

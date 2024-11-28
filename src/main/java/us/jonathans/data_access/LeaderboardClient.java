@@ -17,7 +17,7 @@ public class LeaderboardClient {
     private static HttpClient httpClient = HttpClient.newHttpClient();
 
     // Method that posts results of user to the leaderboard
-    public void postleaderboard(String name, String opponent, int score, long timestamp) throws IOException, InterruptedException {
+    public void postleaderboard(String name, String opponent, int score, long timestamp){
         String url = BASE_URL + API_KEY;
 
         JSONObject json = new JSONObject();
@@ -33,11 +33,17 @@ public class LeaderboardClient {
                 .POST(HttpRequest.BodyPublishers.ofString(json.toString(), StandardCharsets.UTF_8))
                 .build();
 
-        httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Method that gets the result of the leaderboard and returns it to the user
-    public static JSONArray getleaderboard() throws IOException, InterruptedException {
+    public static JSONArray getleaderboard(){
         String url = BASE_URL + API_KEY;
 
         //Get Request
@@ -46,7 +52,14 @@ public class LeaderboardClient {
                 .GET()
                 .build();
 
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+        try {
+            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         JSONObject jsonResponse = new JSONObject(response.body());
         return jsonResponse.getJSONArray("leaderboard");

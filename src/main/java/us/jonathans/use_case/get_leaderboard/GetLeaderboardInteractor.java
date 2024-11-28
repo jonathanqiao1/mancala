@@ -12,7 +12,7 @@ public class GetLeaderboardInteractor implements GetLeaderboardInputBoundary {
         this.getLeaderboardPresenter = getLeaderboardOutputBoundary;
     }
 
-    public Leaderboard getLeaderboard() {
+    public Leaderboard getLeaderboard(){
         return getLeaderboardRepository.getLeaderboard();
     }
 
@@ -21,5 +21,4 @@ public class GetLeaderboardInteractor implements GetLeaderboardInputBoundary {
                 GetLeaderboardOutputData(getLeaderboardRepository.getLeaderboard());
         getLeaderboardPresenter.prepareUpdateScreen(getLeaderboardOutputData);
     }
-
 }
