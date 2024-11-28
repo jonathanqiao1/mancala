@@ -12,7 +12,7 @@ public class PostLeaderboardController {
         this.postLeaderboardInteractor = postLeaderboardInteractor;
     }
 
-    public void execute(String username, String opponent, int score) throws IOException, InterruptedException {
+    public void execute(String username, String opponent, int score) {
         PostLeaderboardInputData postLeaderboardInputData =
                 new PostLeaderboardInputData(username, opponent, score);
 

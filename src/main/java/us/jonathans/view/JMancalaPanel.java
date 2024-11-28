@@ -198,13 +198,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         getLeaderboardButton.addActionListener(
                 evt -> {
                     if(evt.getSource().equals(getLeaderboardButton)) {
-                        try {
-                            getLeaderboardController.execute();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        getLeaderboardController.execute();
                     }
                 }
         );
