@@ -11,7 +11,7 @@ public class PostLeaderboardInteractor implements PostLeaderboardInputBoundary{
     }
 
     @Override
-    public void execute(PostLeaderboardInputData postLeaderboardInputData) {
+    public void execute(PostLeaderboardInputData postLeaderboardInputData){
         postLeaderboardRepository.postLeaderboard(postLeaderboardInputData.getUsername(),
                 postLeaderboardInputData.getOpponent(),
                 postLeaderboardInputData.getScore(),
