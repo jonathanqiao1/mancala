@@ -7,6 +7,8 @@ import us.jonathans.entity.rendering.sprite.Hole;
 import us.jonathans.entity.rendering.sprite.SquareHole;
 import us.jonathans.entity.rendering.sprite.Stone;
 import us.jonathans.entity.rendering.sprite.StoneColors;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchState;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameState;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
 
@@ -21,6 +23,7 @@ import java.util.Random;
 
 public class JMancalaPanel extends JPanel implements MouseMotionListener, PropertyChangeListener {
     private final StartGameViewModel startGameViewModel;
+    private final CancelMatchViewModel cancelMatchViewModel;
     private final String viewName = "mancala_panel";
     int[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     final ArrayList<Hole> holes = new ArrayList<>();
@@ -30,10 +33,16 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     private Container parent;
     private Dimension lastSize;
 
-    public JMancalaPanel(Container frame, StartGameViewModel startGameViewModel) {
+    public JMancalaPanel(
+            Container frame,
+            StartGameViewModel startGameViewModel,
+            CancelMatchViewModel cancelMatchViewModel
+    ) {
         super();
         this.startGameViewModel = startGameViewModel;
         this.startGameViewModel.addPropertyChangeListener(this);
+        this.cancelMatchViewModel = cancelMatchViewModel;
+        this.cancelMatchViewModel.addPropertyChangeListener(this);
         this.parent = frame;
         this.addMouseMotionListener(this);
         this.setDoubleBuffered(true);
@@ -181,9 +190,15 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final StartGameState state = (StartGameState) evt.getNewValue();
-        if (state.isSuccessful()) {
-            this.board = state.getBoard();
+        if (evt.getNewValue() instanceof StartGameState) {
+            final StartGameState state = (StartGameState) evt.getNewValue();
+            if (state.isSuccessful()) {
+                this.board = state.getBoard();
+                initSprites();
+                repaint();
+            }
+        } else if (evt.getNewValue() instanceof CancelMatchState) {
+            this.board = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             initSprites();
             repaint();
         }
