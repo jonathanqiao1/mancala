@@ -47,7 +47,6 @@ public class App implements KeyListener {
                 getLeaderboardViewModel,
                 makePlayerMoveViewModel,
                 makePlayerMoveController
-
         );
         frame.setContentPane(mainView);
     }

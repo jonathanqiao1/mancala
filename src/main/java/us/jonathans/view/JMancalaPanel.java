@@ -7,6 +7,8 @@ import us.jonathans.entity.rendering.sprite.Hole;
 import us.jonathans.entity.rendering.sprite.SquareHole;
 import us.jonathans.entity.rendering.sprite.Stone;
 import us.jonathans.entity.rendering.sprite.StoneColors;
+import us.jonathans.entity.rule.MancalaHole;
+import us.jonathans.entity.rule.MancalaSide;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameState;
@@ -15,6 +17,7 @@ import us.jonathans.interface_adapter.start_game.StartGameViewModel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -46,6 +49,44 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         this.setDoubleBuffered(true);
         lastSize = this.getPreferredSize();
         initSprites();
+
+        this.addMouseListener(new MouseListener(holes) {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+
+                for (Hole hole : holes) {
+                    if (hole.contains(x, y)) {
+                        makePlayerMoveController.execute(
+                                MancalaSide.PLAYER1,
+                                MancalaHole.A
+                        );
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 
     private void initSprites() {
@@ -195,4 +236,6 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
             repaint();
         }
     }
+
+
 }
