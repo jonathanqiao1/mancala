@@ -1,14 +1,22 @@
 package us.jonathans.view;
 
+import us.jonathans.interface_adapter.start_game.StartGameController;
+import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class CreateMatchView extends JPanel {
     private final static String viewName = "Create Match";
 
-    public CreateMatchView() {
+    public CreateMatchView(
+            StartGameController startGameController,
+            StartGameViewModel startGameViewModel
+    ) {
         setBorder(BorderFactory.createTitledBorder(viewName));
         setLayout(new GridBagLayout());
 
@@ -79,6 +87,10 @@ public class CreateMatchView extends JPanel {
         usePhoneCheckbox.addItemListener(e -> {
             boolean checked = e.getStateChange() == ItemEvent.SELECTED;
             phoneInputField.setEnabled(checked);
+        });
+
+        startMatchButton.addActionListener(e -> {
+            startGameController.execute("1", "1", "1");
         });
     }
 }
