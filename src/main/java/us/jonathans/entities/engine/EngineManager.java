@@ -1,6 +1,6 @@
 package us.jonathans.entities.engine;
 
-import us.jonathans.mancala.MancalaRuleSet;
+import us.jonathans.entity.rule.MancalaRuleSet;
 
 public class EngineManager {
     MancalaRuleSet ruleSet;

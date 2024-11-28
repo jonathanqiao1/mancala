@@ -1,8 +1,8 @@
 package us.jonathans.use_case.makeComputerMove;
 
-import us.jonathans.mancala.MancalaBoard;
-import us.jonathans.mancala.MancalaRuleSet;
-import us.jonathans.mancala.MancalaSide;
+import us.jonathans.entity.rule.MancalaBoard;
+import us.jonathans.entity.rule.MancalaRuleSet;
+import us.jonathans.entity.rule.MancalaSide;
 
 public class MakeComputerMoveInputData {
 

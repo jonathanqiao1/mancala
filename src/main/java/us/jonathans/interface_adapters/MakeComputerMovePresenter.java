@@ -1,37 +1,37 @@
 package us.jonathans.interface_adapters;
 
-import us.jonathans.mancala.MancalaBoard;
-import us.jonathans.mancala.MancalaHole;
-import us.jonathans.mancala.MancalaSide;
+import us.jonathans.entity.rule.MancalaBoard;
+import us.jonathans.entity.rule.MancalaHole;
 import us.jonathans.use_case.makeComputerMove.MakeComputerMoveOutputBoundary;
 import us.jonathans.view.MakeComputerMoveView;
 
 public class MakeComputerMovePresenter implements MakeComputerMoveOutputBoundary {
-    private final MakeComputerMoveView view;
+    private MakeComputerMoveViewModel viewModel;
 
-    // Constructor
-    public MakeComputerMovePresenter(MakeComputerMoveView view) {
-        this.view = view;
+    /**
+     * Initializes the presenter with the view model.
+     *
+     * @param viewModel The view model that maintains the board state.
+     */
+    public MakeComputerMovePresenter(MakeComputerMoveViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
-    @Override
-    public void presentUpdatedBoard(MancalaBoard board) {
-        // Convert board data to a view model
-        MakeComputerMoveViewModel viewModel = createBoardViewModel(board);
+    /**
+     * Updates the board state in the view model after a move.
+     *
+     * @param board The Mancala board containing the current state.
+     */
+    public void displayUpdatedBoard(MancalaBoard board) {
+        int[] updatedBoard = new int[14];
 
-        // Pass the view model to the view
-        view.displayUpdatedBoard(viewModel);
-    }
-
-    // Helper method to create a view model from the MancalaBoard
-    private MakeComputerMoveViewModel createBoardViewModel(MancalaBoard board) {
-        MakeComputerMoveViewModel viewModel = new MakeComputerMoveViewModel();
-
+        // Loop through the Mancala holes to populate the board state.
         for (MancalaHole hole : MancalaHole.values()) {
-            int stones = board.getStones(hole);
-            viewModel.setHoleState(hole.ordinal(), stones);
+            updatedBoard[hole.ordinal()] = board.getStones(hole);
         }
 
-        return viewModel;
+        // Update the view model, which triggers UI updates.
+        viewModel.setBoard(updatedBoard);
     }
+
 }

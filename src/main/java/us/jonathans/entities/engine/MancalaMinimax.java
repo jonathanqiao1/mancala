@@ -1,9 +1,9 @@
 package us.jonathans.entities.engine;
 
-import us.jonathans.mancala.MancalaBoard;
-import us.jonathans.mancala.MancalaHole;
-import us.jonathans.mancala.MancalaRuleSet;
-import us.jonathans.mancala.MancalaSide;
+import us.jonathans.entity.rule.MancalaBoard;
+import us.jonathans.entity.rule.MancalaHole;
+import us.jonathans.entity.rule.MancalaRuleSet;
+import us.jonathans.entity.rule.MancalaSide;
 
 public class MancalaMinimax implements Engine {
     private final MancalaRuleSet rules;
@@ -21,13 +21,14 @@ public class MancalaMinimax implements Engine {
             return evaluate(board, player);
         }
 
-        // CHECK PLAYER LOGIC
+        // Get the side for the current turn
+        MancalaSide currentPlayer = isMaximizingPlayer ? player : player.opposite();
+
         // Maximizing Player's Turn
         if (isMaximizingPlayer) {
             int maxEval = Integer.MIN_VALUE;
-            MancalaSide currentPlayer = MancalaSide.PlAYER2;
             for (MancalaHole move : rules.getLegalMoves(board, currentPlayer)) {
-                MancalaBoard clonedBoard = cloneBoard(board);
+                MancalaBoard clonedBoard = board.clone();
                 rules.makeMove(clonedBoard, currentPlayer, move);
                 int eval = minimax(clonedBoard, depth - 1, false, player);
                 maxEval = Math.max(maxEval, eval);
@@ -38,9 +39,9 @@ public class MancalaMinimax implements Engine {
         // Minimizing Player's Turn
         else {
             int minEval = Integer.MAX_VALUE;
-            MancalaSide currentPlayer = MancalaSide.PLAYER1;
+            currentPlayer = MancalaSide.PLAYER1;
             for (MancalaHole move : rules.getLegalMoves(board, currentPlayer)) {
-                MancalaBoard clonedBoard = cloneBoard(board);
+                MancalaBoard clonedBoard = board.clone();
                 rules.makeMove(clonedBoard, currentPlayer, move);
                 int eval = minimax(clonedBoard, depth - 1, true, player);
                 minEval = Math.min(minEval, eval);
@@ -55,7 +56,7 @@ public class MancalaMinimax implements Engine {
         int bestValue = Integer.MIN_VALUE;
 
         for (MancalaHole move : rules.getLegalMoves(board, player)) {
-            MancalaBoard clonedBoard = cloneBoard(board);
+            MancalaBoard clonedBoard = board.clone();
             rules.makeMove(clonedBoard, player, move);
             int moveValue = minimax(clonedBoard, maxDepth - 1, false, player);
             if (moveValue > bestValue) {
@@ -80,12 +81,5 @@ public class MancalaMinimax implements Engine {
             opponentScore = board.getStones(MancalaHole.A);
         }
         return playerScore - opponentScore;
-    }
-
-    // Utility method to clone the board
-    private MancalaBoard cloneBoard(MancalaBoard board) {
-        // Implement board cloning logic here
-        MancalaBoard clone = null;
-        return clone;
     }
 }

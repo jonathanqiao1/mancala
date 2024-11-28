@@ -1,8 +1,8 @@
 package us.jonathans.entities.engine;
 
-import us.jonathans.mancala.MancalaBoard;
-import us.jonathans.mancala.MancalaHole;
-import us.jonathans.mancala.MancalaSide;
+import us.jonathans.entity.rule.MancalaBoard;
+import us.jonathans.entity.rule.MancalaHole;
+import us.jonathans.entity.rule.MancalaSide;
 
 public interface Engine {
 
