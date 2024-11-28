@@ -22,7 +22,7 @@ import java.util.Random;
 public class JMancalaPanel extends JPanel implements MouseMotionListener, PropertyChangeListener {
     private final StartGameViewModel startGameViewModel;
     private final String viewName = "mancala_panel";
-    int[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+    int[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     final ArrayList<Hole> holes = new ArrayList<>();
     final ArrayList<Stone> stones = new ArrayList<>();
     private SquareHole topHole;
@@ -182,8 +182,10 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final StartGameState state = (StartGameState) evt.getNewValue();
-        this.board = state.getBoard();
-        initSprites();
-        repaint();
+        if (state.isSuccessful()) {
+            this.board = state.getBoard();
+            initSprites();
+            repaint();
+        }
     }
 }
