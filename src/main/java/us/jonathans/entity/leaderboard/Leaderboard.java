@@ -31,7 +31,7 @@ public class Leaderboard {
         for (Map.Entry<String, ArrayList<Object>> entry : data.entrySet()) {
             listST.add((Integer) entry.getValue().get(typeC));
         }
-        Collections.sort(listST);
+        Collections.sort(listST, Collections.reverseOrder());
 
         for(int num : listST){
             for (Map.Entry<String, ArrayList<Object>> entry : data.entrySet()) {
