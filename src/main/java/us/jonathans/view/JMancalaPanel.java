@@ -7,6 +7,8 @@ import us.jonathans.entity.rendering.sprite.Hole;
 import us.jonathans.entity.rendering.sprite.SquareHole;
 import us.jonathans.entity.rendering.sprite.Stone;
 import us.jonathans.entity.rendering.sprite.StoneColors;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameState;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
 
@@ -21,6 +23,8 @@ import java.util.Random;
 
 public class JMancalaPanel extends JPanel implements MouseMotionListener, PropertyChangeListener {
     private final StartGameViewModel startGameViewModel;
+    private final MakePlayerMoveViewModel makePlayerMoveViewModel;
+    private final MakePlayerMoveController makePlayerMoveController;
     private final String viewName = "mancala_panel";
     int[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     final ArrayList<Hole> holes = new ArrayList<>();
@@ -30,10 +34,13 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     private Container parent;
     private Dimension lastSize;
 
-    public JMancalaPanel(Container frame, StartGameViewModel startGameViewModel) {
+    public JMancalaPanel(Container frame, StartGameViewModel startGameViewModel, MakePlayerMoveViewModel makePlayerMoveViewModel, MakePlayerMoveController makePlayerMoveController) {
         super();
         this.startGameViewModel = startGameViewModel;
+        this.makePlayerMoveViewModel = makePlayerMoveViewModel;
+        this.makePlayerMoveController = makePlayerMoveController;
         this.startGameViewModel.addPropertyChangeListener(this);
+        this.makePlayerMoveViewModel.addPropertyChangeListener(this);
         this.parent = frame;
         this.addMouseMotionListener(this);
         this.setDoubleBuffered(true);

@@ -4,6 +4,8 @@ import us.jonathans.data_access.leaderboard.LeaderboardRepository;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardPresenter;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardController;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardPresenter;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardViewModel;
@@ -24,12 +26,16 @@ public class App implements KeyListener {
     private StartGameViewModel startGameViewModel;
     private GetLeaderboardViewModel getLeaderboardViewModel;
     private PostLeaderboardViewModel postLeaderboardViewModel;
+    private MakePlayerMoveViewModel makePlayerMoveViewModel;
+    private MakePlayerMoveController makePlayerMoveController;
 
     public App(
             StartGameController startGameController,
             StartGameViewModel startGameViewModel,
             GetLeaderboardController getLeaderboardController,
-            GetLeaderboardViewModel getLeaderboardViewModel
+            GetLeaderboardViewModel getLeaderboardViewModel,
+            MakePlayerMoveViewModel makePlayerMoveViewModel,
+            MakePlayerMoveController makePlayerMoveController
     ) {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -38,7 +44,10 @@ public class App implements KeyListener {
                 startGameController,
                 startGameViewModel,
                 getLeaderboardController,
-                getLeaderboardViewModel
+                getLeaderboardViewModel,
+                makePlayerMoveViewModel,
+                makePlayerMoveController
+
         );
         frame.setContentPane(mainView);
     }

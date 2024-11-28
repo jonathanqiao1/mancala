@@ -6,6 +6,8 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatArcDarkIJTheme
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
 
@@ -19,7 +21,9 @@ public class MainView extends JPanel {
             StartGameController startGameController,
             StartGameViewModel startGameViewModel,
             GetLeaderboardController getLeaderboardController,
-            GetLeaderboardViewModel getLeaderboardViewModel
+            GetLeaderboardViewModel getLeaderboardViewModel,
+            MakePlayerMoveViewModel makePlayerMoveViewModel,
+            MakePlayerMoveController makePlayerMoveController
     ) {
         super();
         FlatLaf.setup(new FlatMonokaiProIJTheme());
@@ -32,7 +36,9 @@ public class MainView extends JPanel {
                 getLeaderboardViewModel
         ));
         add(new GameView(
-                startGameViewModel
+                startGameViewModel,
+                makePlayerMoveViewModel,
+                makePlayerMoveController
         ));
     }
 }
