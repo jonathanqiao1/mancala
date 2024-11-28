@@ -5,7 +5,10 @@ import us.jonathans.entity.rule.MancalaBoard;
 public record StartGameOutputData(
         String playerUsername,
         String playerPhoneNumber,
+        boolean usePhoneNumber,
         String engineId,
-        MancalaBoard board
+        MancalaBoard board,
+        boolean successful,
+        String failReason
 ) {
 }

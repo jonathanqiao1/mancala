@@ -51,6 +51,7 @@ public class MancalaMinimax implements Engine {
     }
 
     // Finds the best move for the current player
+    @Override
     public MancalaHole findBestMove(MancalaBoard board, MancalaSide player) {
         MancalaHole bestMove = null;
         int bestValue = Integer.MIN_VALUE;
