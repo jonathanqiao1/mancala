@@ -3,8 +3,6 @@ package us.jonathans.interface_adapter.post_leaderboard;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardInputBoundary;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardInputData;
 
-import java.io.IOException;
-
 public class PostLeaderboardController {
     private final PostLeaderboardInputBoundary postLeaderboardInteractor;
 

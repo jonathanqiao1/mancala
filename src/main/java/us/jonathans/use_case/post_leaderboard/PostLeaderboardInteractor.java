@@ -1,7 +1,5 @@
 package us.jonathans.use_case.post_leaderboard;
 
-import java.io.IOException;
-
 public class PostLeaderboardInteractor implements PostLeaderboardInputBoundary{
     PostLeaderboardRepositoryInterface postLeaderboardRepository;
     PostLeaderboardOutputBoundary postLeaderboardPresenter;

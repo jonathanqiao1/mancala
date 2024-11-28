@@ -17,8 +17,7 @@ public class GetLeaderboardInteractor implements GetLeaderboardInputBoundary {
     }
 
     public void execute(){
-        GetLeaderboardOutputData getLeaderboardOutputData = null;
-        getLeaderboardOutputData = new
+        GetLeaderboardOutputData getLeaderboardOutputData = new
                 GetLeaderboardOutputData(getLeaderboardRepository.getLeaderboard());
         getLeaderboardPresenter.prepareUpdateScreen(getLeaderboardOutputData);
     }
