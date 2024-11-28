@@ -11,8 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class LeaderboardClient {
-    private static final String API_KEY = "doNotCommitThisSecretKeyPlease";        // ADD API KEY for the leaderboard API
-    private static final String BASE_URL = "http://5.161.50.235:6969/leaderboard/";           // ADD URL for the leaderboard API
+    private static final String API_KEY = "";        // ADD API KEY for the leaderboard API
+    private static final String BASE_URL = "";           // ADD URL for the leaderboard API
 
     private static HttpClient httpClient = HttpClient.newHttpClient();
 
