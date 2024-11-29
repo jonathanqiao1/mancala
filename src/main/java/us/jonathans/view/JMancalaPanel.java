@@ -55,6 +55,10 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
 
@@ -67,11 +71,6 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                         break;
                     }
                 }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
             }
 
             @Override
@@ -151,20 +150,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 -1
 
         );
-//        int nStones = board[6];
-//        for (int i = 0; i < nStones; i++) {
-//            Vec2 stonePos = pointInsideCircle(topHole, stoneRadius, r);
-//            stones.add(
-//                    new Stone(
-//                            stonePos.x,
-//                            stonePos.y,
-//                            stoneRadius * 2,
-//                            stoneRadius * 2,
-//                            Align.CENTER,
-//                            StoneColors.getRandom(r)
-//                    )
-//            );
-//        }
+
         this.bottomHole = new SquareHole(
                 getPreferredSize().width / 2,
                 cellHeight * 7 + cellHeight / 2,
@@ -174,7 +160,35 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 -1
         );
 
+        int nStones = board[13];
+        for (int i = 0; i < nStones; i++) {
+            Vec2 stonePos = pointInsideSquare(topHole, stoneRadius, r);
+            stones.add(
+                    new Stone(
+                            stonePos.x,
+                            stonePos.y,
+                            stoneRadius * 2,
+                            stoneRadius * 2,
+                            Align.CENTER,
+                            StoneColors.getRandom(r)
+                    )
+            );
+        }
 
+        nStones = board[6];
+        for (int i = 0; i < nStones; i++) {
+            Vec2 stonePos = pointInsideSquare(bottomHole, stoneRadius, r);
+            stones.add(
+                    new Stone(
+                            stonePos.x,
+                            stonePos.y,
+                            stoneRadius * 2,
+                            stoneRadius * 2,
+                            Align.CENTER,
+                            StoneColors.getRandom(r)
+                    )
+            );
+        }
     }
 
     @Override
@@ -223,6 +237,15 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     private Vec2 pointInsideCircle(Obj2 obj, int radius, Random r) {
         double radians = 2.0d * Math.PI * r.nextDouble(1.0d);
         double deviation = (obj.radius() - radius) * Math.sqrt(r.nextDouble(1.0d));
+        return new Vec2(
+                (int) (obj.cx() + deviation * Math.cos(radians)),
+                (int) (obj.cy() + deviation * Math.sin(radians))
+        );
+    }
+
+    private Vec2 pointInsideSquare(Obj2 obj, int radius, Random r) {
+        double radians = 2.0d * Math.PI * r.nextDouble(1.0d);
+        double deviation = (obj.height() / 2 - radius) * Math.sqrt(r.nextDouble(1.0d));
         return new Vec2(
                 (int) (obj.cx() + deviation * Math.cos(radians)),
                 (int) (obj.cy() + deviation * Math.sin(radians))
