@@ -2,12 +2,12 @@ package us.jonathans.view;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatArcDarkIJTheme;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,9 @@ public class MainView extends JPanel {
             StartGameController startGameController,
             StartGameViewModel startGameViewModel,
             GetLeaderboardController getLeaderboardController,
-            GetLeaderboardViewModel getLeaderboardViewModel
+            GetLeaderboardViewModel getLeaderboardViewModel,
+            MakeComputerMoveController makeComputerMoveController,
+            MakeComputerMoveViewModel makeComputerMoveViewModel
     ) {
         super();
         FlatLaf.setup(new FlatMonokaiProIJTheme());
@@ -32,7 +34,9 @@ public class MainView extends JPanel {
                 getLeaderboardViewModel
         ));
         add(new GameView(
-                startGameViewModel
+                startGameViewModel,
+                makeComputerMoveController,
+                makeComputerMoveViewModel
         ));
     }
 }

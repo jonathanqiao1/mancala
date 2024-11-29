@@ -69,7 +69,7 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
         gbc8.gridy = 1;
         JLabel selectEngineLabel = new JLabel("Engine");
         selectEngineDropdown = new JComboBox<>(
-                new String[]{"Randomizer3000", "MiniMax"}
+                new String[]{"Randomizer3000", "minimax_easy"}
         );
 
         add(selectEngineLabel, gbc7);

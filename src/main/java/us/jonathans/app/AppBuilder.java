@@ -9,7 +9,11 @@ import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGamePresenter;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMovePresenter;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
+import us.jonathans.use_case.make_computer_move.MakeComputerMoveInteractor;
 import us.jonathans.use_case.start_game.StartGameInteractor;
 
 public class AppBuilder {
@@ -17,6 +21,8 @@ public class AppBuilder {
     private StartGameController startGameController;
     private GetLeaderboardViewModel getLeaderboardViewModel;
     private GetLeaderboardController getLeaderboardController;
+    private MakeComputerMoveViewModel makeComputerMoveViewModel;
+    private MakeComputerMoveController makeComputerMoveController;
 
     public AppBuilder addStartGameUseCase() {
         startGameViewModel = new StartGameViewModel();
@@ -41,12 +47,25 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addMakeComputerMoveUseCase() {
+        makeComputerMoveViewModel = new MakeComputerMoveViewModel();
+        makeComputerMoveController = new MakeComputerMoveController(
+                new MakeComputerMoveInteractor(
+                        InMemoryMatchDataAccess.getInstance(),
+                        new MakeComputerMovePresenter(makeComputerMoveViewModel)
+                )
+        );
+        return this;
+    }
+
     public App build() {
         return new App(
                 startGameController,
                 startGameViewModel,
                 getLeaderboardController,
-                getLeaderboardViewModel
+                getLeaderboardViewModel,
+                makeComputerMoveController,
+                makeComputerMoveViewModel
         );
     }
 }

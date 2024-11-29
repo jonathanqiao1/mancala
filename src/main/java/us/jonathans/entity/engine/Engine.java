@@ -1,4 +1,4 @@
-package us.jonathans.entities.engine;
+package us.jonathans.entity.engine;
 
 import us.jonathans.entity.rule.MancalaBoard;
 import us.jonathans.entity.rule.MancalaHole;

@@ -9,6 +9,8 @@ import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardPresenter;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
@@ -29,7 +31,9 @@ public class App implements KeyListener {
             StartGameController startGameController,
             StartGameViewModel startGameViewModel,
             GetLeaderboardController getLeaderboardController,
-            GetLeaderboardViewModel getLeaderboardViewModel
+            GetLeaderboardViewModel getLeaderboardViewModel,
+            MakeComputerMoveController makeComputerMoveController,
+            MakeComputerMoveViewModel makeComputerMoveViewModel
     ) {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -38,7 +42,9 @@ public class App implements KeyListener {
                 startGameController,
                 startGameViewModel,
                 getLeaderboardController,
-                getLeaderboardViewModel
+                getLeaderboardViewModel,
+                makeComputerMoveController,
+                makeComputerMoveViewModel
         );
         frame.setContentPane(mainView);
     }
