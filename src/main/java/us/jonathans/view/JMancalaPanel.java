@@ -7,9 +7,11 @@ import us.jonathans.entity.rendering.sprite.Hole;
 import us.jonathans.entity.rendering.sprite.SquareHole;
 import us.jonathans.entity.rendering.sprite.Stone;
 import us.jonathans.entity.rendering.sprite.StoneColors;
+import us.jonathans.entity.rule.MancalaBoard;
 import us.jonathans.entity.rule.MancalaHole;
 import us.jonathans.entity.rule.MancalaSide;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveState;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameState;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
@@ -50,10 +52,21 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         lastSize = this.getPreferredSize();
         initSprites();
 
-        this.addMouseListener(new MouseListener(holes) {
+        this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
 
+                for (Hole hole : holes) {
+                    if (hole.contains(x, y)) {
+                        makePlayerMoveController.execute(
+                                MancalaSide.PLAYER1,
+                                MancalaHole.getHole(hole.getId())
+                        );
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -63,18 +76,6 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
-
-                for (Hole hole : holes) {
-                    if (hole.contains(x, y)) {
-                        makePlayerMoveController.execute(
-                                MancalaSide.PLAYER1,
-                                MancalaHole.A
-                        );
-                        break;
-                    }
-                }
             }
 
             @Override
@@ -148,7 +149,22 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 cellHeight,
                 Align.CENTER,
                 -1
+
         );
+//        int nStones = board[6];
+//        for (int i = 0; i < nStones; i++) {
+//            Vec2 stonePos = pointInsideCircle(topHole, stoneRadius, r);
+//            stones.add(
+//                    new Stone(
+//                            stonePos.x,
+//                            stonePos.y,
+//                            stoneRadius * 2,
+//                            stoneRadius * 2,
+//                            Align.CENTER,
+//                            StoneColors.getRandom(r)
+//                    )
+//            );
+//        }
         this.bottomHole = new SquareHole(
                 getPreferredSize().width / 2,
                 cellHeight * 7 + cellHeight / 2,
@@ -157,6 +173,8 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 Align.CENTER,
                 -1
         );
+
+
     }
 
     @Override
@@ -226,15 +244,43 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         repaint();
     }
 
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final StartGameState state = (StartGameState) evt.getNewValue();
-        if (state.isSuccessful()) {
-            this.board = state.getBoard();
-            initSprites();
-            repaint();
+        if (evt.getNewValue() instanceof StartGameState) {
+            final StartGameState state = (StartGameState) evt.getNewValue();
+            if (state.isSuccessful()) {
+                this.board = state.getBoard();
+                initSprites();
+                repaint();
+            }
         }
+        if (evt.getNewValue() instanceof MakePlayerMoveState) {
+            MakePlayerMoveState makePlayerMoveState = (MakePlayerMoveState) evt.getNewValue();
+            if (makePlayerMoveState.getMoveResult().isLegal()) {
+                this.board = fixBoard(makePlayerMoveState.getBoard());
+                initSprites();
+                repaint();
+            }
+        }
+    }
+
+    private int[] fixBoard(int[] board) {
+        return new int[] {
+                board[7],
+                board[8],
+                board[9],
+                board[10],
+                board[11],
+                board[12],
+                board[13],
+                board[5],
+                board[4],
+                board[3],
+                board[2],
+                board[1],
+                board[0],
+                board[6]
+        };
     }
 
 
