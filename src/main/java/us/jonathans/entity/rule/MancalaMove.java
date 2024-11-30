@@ -1,4 +1,4 @@
 package us.jonathans.entity.rule;
 
-public record MancalaMove(MancalaHole hole, MancalaSide side) {
+public record MancalaMove(MancalaSide side, MancalaHole hole) {
 }

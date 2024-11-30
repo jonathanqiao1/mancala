@@ -1,7 +1,7 @@
-package us.jonathans.interface_adapters;
+package us.jonathans.interface_adapter.make_computer_move;
 
-import us.jonathans.use_case.makeComputerMove.MakeComputerMoveInputBoundary;
-import us.jonathans.view.MakeComputerMoveView;
+import us.jonathans.use_case.make_computer_move.MakeComputerMoveInputBoundary;
+import us.jonathans.use_case.make_computer_move.MakeComputerMoveInputData;
 
 public class MakeComputerMoveController {
     private final MakeComputerMoveInputBoundary makeComputerMoveInteractor;
@@ -11,7 +11,7 @@ public class MakeComputerMoveController {
     }
 
     public void execute() {
-        makeComputerMoveInteractor.execute();
+        makeComputerMoveInteractor.execute(new MakeComputerMoveInputData());
     }
 
 }
