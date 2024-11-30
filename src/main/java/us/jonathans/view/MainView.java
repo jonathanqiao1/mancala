@@ -10,6 +10,8 @@ import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +24,8 @@ public class MainView extends JPanel {
             StartGameViewModel startGameViewModel,
             GetLeaderboardController getLeaderboardController,
             GetLeaderboardViewModel getLeaderboardViewModel,
+            MakeComputerMoveController makeComputerMoveController,
+            MakeComputerMoveViewModel makeComputerMoveViewModel
             CancelMatchController cancelMatchController,
             CancelMatchViewModel cancelMatchViewModel
     ) {
@@ -39,6 +43,8 @@ public class MainView extends JPanel {
         ));
         add(new GameView(
                 startGameViewModel,
+                makeComputerMoveController,
+                makeComputerMoveViewModel
                 cancelMatchViewModel
         ));
     }

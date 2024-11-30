@@ -1,5 +1,7 @@
-package us.jonathans.entities.engine;
+package us.jonathans.data_access.engine;
 
+import us.jonathans.entity.engine.Engine;
+import us.jonathans.entity.engine.MancalaMinimax;
 import us.jonathans.entity.rule.MancalaRuleSet;
 
 public class EngineManager {
@@ -15,7 +17,7 @@ public class EngineManager {
             case "minimax_normal":
                 engine = new MancalaMinimax(ruleSet, 5);
             case "minimax_hard":
-                engine = new MancalaMinimax(ruleSet, 7);
+                engine = new MancalaMinimax(ruleSet, 8);
         }
         return engine;
     }

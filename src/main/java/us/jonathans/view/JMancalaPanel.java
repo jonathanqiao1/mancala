@@ -11,6 +11,9 @@ import us.jonathans.interface_adapter.cancel_match.CancelMatchState;
 import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameState;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveState;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +28,8 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     private final StartGameViewModel startGameViewModel;
     private final CancelMatchViewModel cancelMatchViewModel;
     private final String viewName = "mancala_panel";
+    private final MakeComputerMoveViewModel makeComputerMoveViewModel;
+    private final MakeComputerMoveController makeComputerMoveController;
     int[] board = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     final ArrayList<Hole> holes = new ArrayList<>();
     final ArrayList<Stone> stones = new ArrayList<>();
@@ -36,11 +41,16 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     public JMancalaPanel(
             Container frame,
             StartGameViewModel startGameViewModel,
+            MakeComputerMoveController makeComputerMoveController,
+            MakeComputerMoveViewModel makeComputerMoveViewModel
             CancelMatchViewModel cancelMatchViewModel
     ) {
         super();
         this.startGameViewModel = startGameViewModel;
         this.startGameViewModel.addPropertyChangeListener(this);
+        this.makeComputerMoveController = makeComputerMoveController;
+        this.makeComputerMoveViewModel = makeComputerMoveViewModel;
+        this.makeComputerMoveViewModel.addPropertyChangeListener(this);
         this.cancelMatchViewModel = cancelMatchViewModel;
         this.cancelMatchViewModel.addPropertyChangeListener(this);
         this.parent = frame;
@@ -48,6 +58,11 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         this.setDoubleBuffered(true);
         lastSize = this.getPreferredSize();
         initSprites();
+        JButton button = new JButton(viewName);
+        button.addActionListener(_ -> {
+            this.makeComputerMoveController.execute();
+        });
+        this.add(button);
     }
 
     private void initSprites() {
@@ -197,10 +212,15 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 initSprites();
                 repaint();
             }
+        }
+        else if(evt.getNewValue() instanceof MakeComputerMoveState) {
+            final MakeComputerMoveState state = (MakeComputerMoveState) evt.getNewValue();
+            this.board = state.getBoard();
         } else if (evt.getNewValue() instanceof CancelMatchState) {
             this.board = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             initSprites();
             repaint();
         }
+
     }
 }

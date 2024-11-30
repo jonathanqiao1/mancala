@@ -11,6 +11,8 @@ import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardPresenter;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
@@ -32,6 +34,8 @@ public class App implements KeyListener {
             StartGameViewModel startGameViewModel,
             GetLeaderboardController getLeaderboardController,
             GetLeaderboardViewModel getLeaderboardViewModel,
+            MakeComputerMoveController makeComputerMoveController,
+            MakeComputerMoveViewModel makeComputerMoveViewModel
             CancelMatchController cancelMatchController,
             CancelMatchViewModel cancelMatchViewModel
     ) {
@@ -43,6 +47,8 @@ public class App implements KeyListener {
                 startGameViewModel,
                 getLeaderboardController,
                 getLeaderboardViewModel,
+                makeComputerMoveController,
+                makeComputerMoveViewModel
                 cancelMatchController,
                 cancelMatchViewModel
         );
