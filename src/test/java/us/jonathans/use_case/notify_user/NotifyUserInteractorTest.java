@@ -138,5 +138,4 @@ class NotifyUserInteractorTest {
                 "\nYou are currently ranked 5th on the leaderboard!";
         verify(mockOutputBoundary).notifyUser(phoneNumber, expectedMessage);
     }
-
 }
