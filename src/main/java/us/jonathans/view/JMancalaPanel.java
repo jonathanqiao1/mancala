@@ -251,14 +251,17 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
             }
             hole.draw(g);
             g.setColor(Color.MAGENTA);
+            int nStones = board[hole.getId()];
+            graphics2D.setFont(new Font("Monospaced", Font.PLAIN, 50));
+            graphics2D.drawString(Integer.toString(nStones), hole.cx(), hole.cy());
         });
 
         topHole.draw(g);
         bottomHole.draw(g);
 
-        stones.forEach(stone -> {
-            stone.draw(g);
-        });
+//        stones.forEach(stone -> {
+//            stone.draw(g);
+//        });
     }
 
     private Vec2 pointInsideCircle(Obj2 obj, int radius, Random r) {

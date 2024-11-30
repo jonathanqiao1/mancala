@@ -1,6 +1,9 @@
 package us.jonathans.app;
 
 import us.jonathans.data_access.leaderboard.LeaderboardRepository;
+import us.jonathans.data_access.match.InMemoryMatchDataAccess;
+import us.jonathans.entity.match.EngineMatch;
+import us.jonathans.entity.rule.MancalaSide;
 import us.jonathans.interface_adapter.cancel_match.CancelMatchController;
 import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
@@ -70,6 +73,26 @@ public class App implements KeyListener {
                 cancelMatchViewModel
         );
         frame.setContentPane(mainView);
+
+        Thread.startVirtualThread(() -> {
+            while (true) {
+                EngineMatch engineMatch = InMemoryMatchDataAccess.getInstance().getCurrentMatch();
+                if (engineMatch == null) {
+                    continue;
+                }
+                MancalaSide playerToMove = engineMatch.getGame().getCurrentSide();
+                if (playerToMove == engineMatch.getEngineSide()) {
+                    makeComputerMoveController.execute();
+                    System.out.println("Computer moved");
+                }
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
 
