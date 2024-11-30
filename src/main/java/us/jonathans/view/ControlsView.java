@@ -1,5 +1,7 @@
 package us.jonathans.view;
 
+import us.jonathans.interface_adapter.cancel_match.CancelMatchController;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
@@ -15,14 +17,18 @@ public class ControlsView extends JPanel {
             StartGameController startGameController,
             StartGameViewModel startGameViewModel,
             GetLeaderboardController getLeaderboardController,
-            GetLeaderboardViewModel getLeaderboardViewModel
+            GetLeaderboardViewModel getLeaderboardViewModel,
+            CancelMatchController cancelMatchController,
+            CancelMatchViewModel cancelMatchViewModel
     ) {
         setBorder(BorderFactory.createTitledBorder(viewName));
         setLayout(new GridLayout(2, 1));
 
         add(new CreateMatchView(
                 startGameController,
-                startGameViewModel
+                startGameViewModel,
+                cancelMatchController,
+                cancelMatchViewModel
         ));
         add(new LeaderboardView(
                 getLeaderboardController,

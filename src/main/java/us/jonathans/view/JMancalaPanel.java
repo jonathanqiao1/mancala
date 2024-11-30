@@ -7,6 +7,8 @@ import us.jonathans.entity.rendering.sprite.Hole;
 import us.jonathans.entity.rendering.sprite.SquareHole;
 import us.jonathans.entity.rendering.sprite.Stone;
 import us.jonathans.entity.rendering.sprite.StoneColors;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchState;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameState;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
 import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
@@ -24,6 +26,7 @@ import java.util.Random;
 
 public class JMancalaPanel extends JPanel implements MouseMotionListener, PropertyChangeListener {
     private final StartGameViewModel startGameViewModel;
+    private final CancelMatchViewModel cancelMatchViewModel;
     private final String viewName = "mancala_panel";
     private final MakeComputerMoveViewModel makeComputerMoveViewModel;
     private final MakeComputerMoveController makeComputerMoveController;
@@ -40,6 +43,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
             StartGameViewModel startGameViewModel,
             MakeComputerMoveController makeComputerMoveController,
             MakeComputerMoveViewModel makeComputerMoveViewModel
+            CancelMatchViewModel cancelMatchViewModel
     ) {
         super();
         this.startGameViewModel = startGameViewModel;
@@ -47,6 +51,8 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         this.makeComputerMoveController = makeComputerMoveController;
         this.makeComputerMoveViewModel = makeComputerMoveViewModel;
         this.makeComputerMoveViewModel.addPropertyChangeListener(this);
+        this.cancelMatchViewModel = cancelMatchViewModel;
+        this.cancelMatchViewModel.addPropertyChangeListener(this);
         this.parent = frame;
         this.addMouseMotionListener(this);
         this.setDoubleBuffered(true);
@@ -210,6 +216,8 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         else if(evt.getNewValue() instanceof MakeComputerMoveState) {
             final MakeComputerMoveState state = (MakeComputerMoveState) evt.getNewValue();
             this.board = state.getBoard();
+        } else if (evt.getNewValue() instanceof CancelMatchState) {
+            this.board = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             initSprites();
             repaint();
         }

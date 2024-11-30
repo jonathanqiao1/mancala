@@ -2,6 +2,10 @@ package us.jonathans.view;
 
 import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.intellijthemes.FlatMonokaiProIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatArcDarkIJTheme;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchController;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
@@ -22,6 +26,8 @@ public class MainView extends JPanel {
             GetLeaderboardViewModel getLeaderboardViewModel,
             MakeComputerMoveController makeComputerMoveController,
             MakeComputerMoveViewModel makeComputerMoveViewModel
+            CancelMatchController cancelMatchController,
+            CancelMatchViewModel cancelMatchViewModel
     ) {
         super();
         FlatLaf.setup(new FlatMonokaiProIJTheme());
@@ -31,12 +37,15 @@ public class MainView extends JPanel {
                 startGameController,
                 startGameViewModel,
                 getLeaderboardController,
-                getLeaderboardViewModel
+                getLeaderboardViewModel,
+                cancelMatchController,
+                cancelMatchViewModel
         ));
         add(new GameView(
                 startGameViewModel,
                 makeComputerMoveController,
                 makeComputerMoveViewModel
+                cancelMatchViewModel
         ));
     }
 }

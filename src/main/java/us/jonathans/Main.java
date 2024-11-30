@@ -9,6 +9,7 @@ public class Main {
                 .addStartGameUseCase()
                 .addLeaderboardUseCase()
                 .addMakeComputerMoveUseCase()
+                .addCancelMatchUseCase()
                 .build();
         app.run();
     }

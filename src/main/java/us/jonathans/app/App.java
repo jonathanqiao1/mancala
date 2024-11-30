@@ -1,6 +1,8 @@
 package us.jonathans.app;
 
 import us.jonathans.data_access.leaderboard.LeaderboardRepository;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchController;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardPresenter;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
@@ -34,6 +36,8 @@ public class App implements KeyListener {
             GetLeaderboardViewModel getLeaderboardViewModel,
             MakeComputerMoveController makeComputerMoveController,
             MakeComputerMoveViewModel makeComputerMoveViewModel
+            CancelMatchController cancelMatchController,
+            CancelMatchViewModel cancelMatchViewModel
     ) {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -45,6 +49,8 @@ public class App implements KeyListener {
                 getLeaderboardViewModel,
                 makeComputerMoveController,
                 makeComputerMoveViewModel
+                cancelMatchController,
+                cancelMatchViewModel
         );
         frame.setContentPane(mainView);
     }
