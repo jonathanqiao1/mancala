@@ -110,7 +110,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
             }
         });
         JButton button = new JButton(viewName);
-        button.addActionListener(_ -> {
+        button.addActionListener(a -> {
             this.makeComputerMoveController.execute();
         });
         this.add(button);
@@ -303,7 +303,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 repaint();
             }
         } else if (evt.getNewValue() instanceof MakePlayerMoveState makePlayerMoveState) {
-            if (makePlayerMoveState.getMoveResult().isLegal()) {
+            if (makePlayerMoveState.getMoveResult()) {
                 this.board = fixBoard(makePlayerMoveState.getBoard());
                 initSprites();
                 repaint();

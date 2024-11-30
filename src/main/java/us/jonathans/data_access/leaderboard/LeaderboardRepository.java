@@ -2,7 +2,6 @@ package us.jonathans.data_access.leaderboard;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import us.jonathans.data_access.LeaderboardClient;
 import us.jonathans.entity.leaderboard.Leaderboard;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardRepositoryInterface;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardRepositoryInterface;

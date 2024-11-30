@@ -7,18 +7,18 @@ import us.jonathans.use_case.make_player_move.MakePlayerMoveOutputData;
 public class MakePlayerMoveState {
 
     private int[] board;
-    private MoveResult moveResult;
+    private Boolean result;
 
     public MakePlayerMoveState(MakePlayerMoveOutputData outputData) {
         this.board = outputData.board().asArray();
-        this.moveResult = outputData.result();
+        this.result = outputData.result();
     }
 
     public int[] getBoard() {
         return board;
     }
 
-    public MoveResult getMoveResult() {
-        return moveResult;
+    public Boolean getMoveResult() {
+        return result;
     }
 }
