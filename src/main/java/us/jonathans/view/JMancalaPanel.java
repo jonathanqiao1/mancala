@@ -302,7 +302,6 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 initSprites();
                 repaint();
             }
-        }
         } else if (evt.getNewValue() instanceof MakePlayerMoveState makePlayerMoveState) {
             if (makePlayerMoveState.getMoveResult().isLegal()) {
                 this.board = fixBoard(makePlayerMoveState.getBoard());
@@ -310,7 +309,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 repaint();
             }
         } else if(evt.getNewValue() instanceof MakeComputerMoveState state) {
-            this.board = state.getBoard();
+            this.board = fixBoard(state.getBoard());
             initSprites();
             repaint();
         } else if (evt.getNewValue() instanceof CancelMatchState) {

@@ -16,7 +16,7 @@ public class GameView extends JPanel {
     public GameView(
             StartGameViewModel startGameViewModel,
             MakePlayerMoveViewModel makePlayerMoveViewModel,
-            MakePlayerMoveController makePlayerMoveController
+            MakePlayerMoveController makePlayerMoveController,
             MakeComputerMoveController makeComputerMoveController,
             MakeComputerMoveViewModel makeComputerMoveViewModel,
             CancelMatchViewModel cancelMatchViewModel
