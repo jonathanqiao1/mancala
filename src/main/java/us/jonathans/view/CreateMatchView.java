@@ -1,5 +1,8 @@
 package us.jonathans.view;
 
+import us.jonathans.interface_adapter.cancel_match.CancelMatchController;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchState;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGameState;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
@@ -19,12 +22,16 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
     private final JComboBox<String> selectEngineDropdown;
     private final JTextField usernameInputField;
     private final JLabel failReasonLabel;
+    private boolean usePhoneNumber = false;
 
     public CreateMatchView(
             StartGameController startGameController,
-            StartGameViewModel startGameViewModel
+            StartGameViewModel startGameViewModel,
+            CancelMatchController cancelMatchController,
+            CancelMatchViewModel cancelMatchViewModel
     ) {
         startGameViewModel.addPropertyChangeListener(this);
+        cancelMatchViewModel.addPropertyChangeListener(this);
         setBorder(BorderFactory.createTitledBorder(viewName));
         setLayout(new GridBagLayout());
 
@@ -69,7 +76,7 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
         gbc8.gridy = 1;
         JLabel selectEngineLabel = new JLabel("Engine");
         selectEngineDropdown = new JComboBox<>(
-                new String[]{"Randomizer3000", "MiniMax"}
+                new String[]{"Randomizer3000", "minimax_easy"}
         );
 
         add(selectEngineLabel, gbc7);
@@ -100,10 +107,10 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
 
         add(buttons, gbc9);
 
-        phoneInputField.setEnabled(false);
+        phoneInputField.setEnabled(usePhoneNumber);
         usePhoneCheckbox.addItemListener(e -> {
-            boolean checked = e.getStateChange() == ItemEvent.SELECTED;
-            phoneInputField.setEnabled(checked);
+            usePhoneNumber = e.getStateChange() == ItemEvent.SELECTED;
+            phoneInputField.setEnabled(usePhoneNumber);
         });
 
         startMatchButton.addActionListener(e -> {
@@ -114,6 +121,8 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
                     (String) selectEngineDropdown.getSelectedItem()
             );
         });
+
+        cancelMatchButton.addActionListener(_ -> cancelMatchController.execute());
     }
 
     @Override
@@ -131,6 +140,14 @@ public class CreateMatchView extends JPanel implements PropertyChangeListener {
             } else {
                 failReasonLabel.setText(startGameState.getFailReason());
             }
+        } else if (evt.getNewValue() instanceof CancelMatchState) {
+            cancelMatchButton.setEnabled(false);
+            startMatchButton.setEnabled(true);
+            usePhoneCheckbox.setEnabled(true);
+            phoneInputField.setEnabled(usePhoneNumber);
+            selectEngineDropdown.setEnabled(true);
+            usernameInputField.setEnabled(true);
+            failReasonLabel.setText("");
         }
     }
 }
