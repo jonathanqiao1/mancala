@@ -13,7 +13,7 @@ class GetLeaderboardPresenterTest {
         leaderboard.add("Bob", "Alice", 32, 1731981570);
         leaderboard.add("Matt", "Liam", 31, 1731982658);
 
-        GetLeaderboardViewModel viewModel = new GetLeaderboardViewModel("leaderboard");
+        GetLeaderboardViewModel viewModel = new GetLeaderboardViewModel();
         GetLeaderboardPresenter presenter = new GetLeaderboardPresenter(viewModel);
 
         String[][] actual = presenter.getLeaderboardData(leaderboard);

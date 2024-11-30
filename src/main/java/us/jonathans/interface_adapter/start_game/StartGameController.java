@@ -16,10 +16,16 @@ public class StartGameController {
      * @param playerPhoneNumber the phone number of the user starting the game
      * @param engineId the ID of the opponent engine
      */
-    public void execute(String playerUsername, String playerPhoneNumber, String engineId) {
+    public void execute(
+            String playerUsername,
+            String playerPhoneNumber,
+            boolean usePhoneNumber,
+            String engineId
+    ) {
         final StartGameInputData startGameInputData = new StartGameInputData(
                 playerUsername,
                 playerPhoneNumber,
+                usePhoneNumber,
                 engineId
         );
 

@@ -31,7 +31,7 @@ public class Leaderboard {
         for (Map.Entry<String, ArrayList<Object>> entry : data.entrySet()) {
             listST.add((Integer) entry.getValue().get(typeC));
         }
-        Collections.sort(listST);
+        Collections.sort(listST, Collections.reverseOrder());
 
         for(int num : listST){
             for (Map.Entry<String, ArrayList<Object>> entry : data.entrySet()) {
@@ -42,5 +42,20 @@ public class Leaderboard {
         }
 
         return sortedData;
+    }
+
+    // Returns the rank on the leaderboard of the user
+    public int getRank(String username) {
+
+        Map<String, ArrayList<Object>> sortedData = sort();
+        int rank = 1;
+
+        for (String key : sortedData.keySet()) {
+            if (key.equals(username)) {
+                return rank;
+            }
+            rank++;
+        }
+        return -1;
     }
 }

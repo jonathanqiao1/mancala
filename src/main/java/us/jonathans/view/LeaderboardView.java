@@ -1,32 +1,66 @@
 package us.jonathans.view;
 
+import us.jonathans.app.Config;
+import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
+import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 
-public class LeaderboardView extends JPanel {
+public class LeaderboardView extends JPanel implements PropertyChangeListener {
     private final static String viewName = "Leaderboard";
+    private static final String[] tableColumnNames = {
+            "Rank", "Username", "Opponent", "Score", "Time"
+    };
+    private String[][] tableRows = new String[][]{};
+    private final JTable leaderboardTable = new JTable();
 
-    public LeaderboardView() {
+    public LeaderboardView(
+            GetLeaderboardController getLeaderboardController,
+            GetLeaderboardViewModel getLeaderboardViewModel
+    ) {
+        getLeaderboardViewModel.addPropertyChangeListener(this);
         setBorder(BorderFactory.createTitledBorder(viewName));
         setLayout(new GridLayout());
 
-        String[] columnNames = {"Rank", "Username", "Opponent", "Score", "Time"};
-        JTable leaderboardTable = new JTable();
+        leaderboardTable.setModel(buildTableModel());
+        JScrollPane scrollPane = new JScrollPane(leaderboardTable);
+        add(scrollPane);
 
-        DefaultTableModel tableModel = new DefaultTableModel(new Object[][]{
-                new Object[]{1, "Bob", "Alice", 34, "November 15, 2024"}
-        }, columnNames) {
+        Thread.startVirtualThread(() -> {
+            while (true) {
+                getLeaderboardController.execute();
+                try {
+                    Thread.sleep(Config.LEADERBOARD_GET_INTERVAL_MS);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 
+    private TableModel buildTableModel() {
+        return new DefaultTableModel(tableRows, tableColumnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+    }
 
-        leaderboardTable.setModel(tableModel);
-        JScrollPane scrollPane = new  JScrollPane(leaderboardTable);
-
-        add(scrollPane);
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("leaderboard".equals(evt.getPropertyName())) {
+            String[][] newTableRows = (String[][]) evt.getNewValue();
+            // Only update the leaderboard model if the leaderboard has new data
+            if (!Arrays.deepEquals(newTableRows, tableRows)) {
+                tableRows = newTableRows;
+                leaderboardTable.setModel(buildTableModel());
+            }
+        }
     }
 }

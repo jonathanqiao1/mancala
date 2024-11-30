@@ -1,14 +1,37 @@
 package us.jonathans.view;
 
+import us.jonathans.interface_adapter.cancel_match.CancelMatchController;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchState;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
+import us.jonathans.interface_adapter.start_game.StartGameController;
+import us.jonathans.interface_adapter.start_game.StartGameState;
+import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class CreateMatchView extends JPanel {
+public class CreateMatchView extends JPanel implements PropertyChangeListener {
     private final static String viewName = "Create Match";
+    private final JButton cancelMatchButton;
+    private final JButton startMatchButton;
+    private final JCheckBox usePhoneCheckbox;
+    private final JTextField phoneInputField;
+    private final JComboBox<String> selectEngineDropdown;
+    private final JTextField usernameInputField;
+    private final JLabel failReasonLabel;
+    private boolean usePhoneNumber = false;
 
-    public CreateMatchView() {
+    public CreateMatchView(
+            StartGameController startGameController,
+            StartGameViewModel startGameViewModel,
+            CancelMatchController cancelMatchController,
+            CancelMatchViewModel cancelMatchViewModel
+    ) {
+        startGameViewModel.addPropertyChangeListener(this);
+        cancelMatchViewModel.addPropertyChangeListener(this);
         setBorder(BorderFactory.createTitledBorder(viewName));
         setLayout(new GridBagLayout());
 
@@ -21,7 +44,7 @@ public class CreateMatchView extends JPanel {
 
 
         JLabel usernameInputLabel = new JLabel("Username");
-        JTextField usernameInputField = new JTextField(12);
+        usernameInputField = new JTextField(12);
 
         add(usernameInputLabel, gbc1);
         add(usernameInputField, gbc2);
@@ -33,7 +56,7 @@ public class CreateMatchView extends JPanel {
         gbc4.gridx = 3;
         gbc4.gridy = 1;
         JLabel phoneInputLabel = new JLabel("Phone");
-        JTextField phoneInputField = new JTextField(12);
+        phoneInputField = new JTextField(12);
 
         add(phoneInputLabel, gbc3);
         add(phoneInputField, gbc4);
@@ -42,7 +65,7 @@ public class CreateMatchView extends JPanel {
         GridBagConstraints gbc6 = new GridBagConstraints();
         gbc6.gridx = 3;
         gbc6.gridy = 0;
-        JCheckBox usePhoneCheckbox = new JCheckBox("Send SMS");
+        usePhoneCheckbox = new JCheckBox("Send SMS");
         add(usePhoneCheckbox, gbc6);
 
         GridBagConstraints gbc7 = new GridBagConstraints();
@@ -52,33 +75,79 @@ public class CreateMatchView extends JPanel {
         gbc8.gridx = 1;
         gbc8.gridy = 1;
         JLabel selectEngineLabel = new JLabel("Engine");
-        JComboBox<String> selectEngineDropdown = new JComboBox<>(
-                new String[]{"Randomizer3000", "MiniMax"}
+        selectEngineDropdown = new JComboBox<>(
+                new String[]{"Randomizer3000", "minimax_easy"}
         );
 
         add(selectEngineLabel, gbc7);
         add(selectEngineDropdown, gbc8);
 
+        failReasonLabel = new JLabel();
+        GridBagConstraints gbc10 = new GridBagConstraints();
+        gbc10.gridy = 2;
+        gbc10.fill = GridBagConstraints.HORIZONTAL;
+        gbc10.gridwidth = 4;
+        gbc10.anchor = GridBagConstraints.CENTER;
+        add(failReasonLabel, gbc10);
+
         GridBagConstraints gbc9 = new GridBagConstraints();
-        gbc9.gridy = 2;
+        gbc9.gridy = 3;
         gbc9.fill = GridBagConstraints.HORIZONTAL;
         gbc9.gridwidth = 4;
 
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout());
 
-        JButton startMatchButton = new JButton("Start");
-        JButton cancelMatchButton = new JButton("Cancel");
+        startMatchButton = new JButton("Start");
+        cancelMatchButton = new JButton("Cancel");
+        cancelMatchButton.setEnabled(false);
 
         buttons.add(cancelMatchButton);
         buttons.add(startMatchButton);
 
         add(buttons, gbc9);
 
-        phoneInputField.setEnabled(false);
+        phoneInputField.setEnabled(usePhoneNumber);
         usePhoneCheckbox.addItemListener(e -> {
-            boolean checked = e.getStateChange() == ItemEvent.SELECTED;
-            phoneInputField.setEnabled(checked);
+            usePhoneNumber = e.getStateChange() == ItemEvent.SELECTED;
+            phoneInputField.setEnabled(usePhoneNumber);
         });
+
+        startMatchButton.addActionListener(e -> {
+            startGameController.execute(
+                    usernameInputLabel.getText(),
+                    phoneInputField.getText(),
+                    usePhoneCheckbox.isSelected(),
+                    (String) selectEngineDropdown.getSelectedItem()
+            );
+        });
+
+        cancelMatchButton.addActionListener(_ -> cancelMatchController.execute());
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getNewValue() instanceof StartGameState) {
+            StartGameState startGameState = (StartGameState) evt.getNewValue();
+            if (startGameState.isSuccessful()) {
+                cancelMatchButton.setEnabled(true);
+                startMatchButton.setEnabled(false);
+                usePhoneCheckbox.setEnabled(false);
+                phoneInputField.setEnabled(false);
+                selectEngineDropdown.setEnabled(false);
+                usernameInputField.setEnabled(false);
+                failReasonLabel.setText("");
+            } else {
+                failReasonLabel.setText(startGameState.getFailReason());
+            }
+        } else if (evt.getNewValue() instanceof CancelMatchState) {
+            cancelMatchButton.setEnabled(false);
+            startMatchButton.setEnabled(true);
+            usePhoneCheckbox.setEnabled(true);
+            phoneInputField.setEnabled(usePhoneNumber);
+            selectEngineDropdown.setEnabled(true);
+            usernameInputField.setEnabled(true);
+            failReasonLabel.setText("");
+        }
     }
 }

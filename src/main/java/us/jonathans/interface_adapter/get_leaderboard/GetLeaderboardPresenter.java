@@ -34,10 +34,10 @@ public class GetLeaderboardPresenter implements GetLeaderboardOutputBoundary {
         for (int i = 0; i < size; i++) {
             username = usernames.get(i);
             opponent = data.get(username).get(0).toString();
-            score = (Integer)data.get(username).get(1);
+            score = (Integer) data.get(username).get(1);
             time = (long) data.get(username).get(2);
 
-            Timestamp stamp = new Timestamp(time*1000);
+            Timestamp stamp = new Timestamp(time * 1000);
             Date date = new Date(stamp.getTime());
 
             values[i][0] = String.valueOf(rank);

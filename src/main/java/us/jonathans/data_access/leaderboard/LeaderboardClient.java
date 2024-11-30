@@ -1,4 +1,4 @@
-package us.jonathans.data_access;
+package us.jonathans.data_access.leaderboard;
 
 import java.io.IOException;
 import java.net.URI;
@@ -11,13 +11,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class LeaderboardClient {
-    private static final String API_KEY = "API KEY";        // ADD API KEY for the leaderboard API
-    private static final String BASE_URL = "URL";           // ADD URL for the leaderboard API
+    private static final String API_KEY = System.getenv("LEADERBOARD_API_KEY");        // ADD API KEY for the leaderboard API
+    private static final String BASE_URL = System.getenv("LEADERBOARD_URL");        // ADD URL for the leaderboard API
 
     private static HttpClient httpClient = HttpClient.newHttpClient();
 
     // Method that posts results of user to the leaderboard
-    public void postleaderboard(String name, String opponent, int score, long timestamp) throws IOException, InterruptedException {
+    public void postleaderboard(String name, String opponent, int score, long timestamp){
         String url = BASE_URL + API_KEY;
 
         JSONObject json = new JSONObject();
@@ -33,11 +33,17 @@ public class LeaderboardClient {
                 .POST(HttpRequest.BodyPublishers.ofString(json.toString(), StandardCharsets.UTF_8))
                 .build();
 
-        httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Method that gets the result of the leaderboard and returns it to the user
-    public static JSONArray getleaderboard() throws IOException, InterruptedException {
+    public static JSONArray getleaderboard(){
         String url = BASE_URL + API_KEY;
 
         //Get Request
@@ -46,7 +52,14 @@ public class LeaderboardClient {
                 .GET()
                 .build();
 
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+        try {
+            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         JSONObject jsonResponse = new JSONObject(response.body());
         return jsonResponse.getJSONArray("leaderboard");

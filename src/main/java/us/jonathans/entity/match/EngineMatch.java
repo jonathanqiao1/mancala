@@ -17,4 +17,11 @@ public class EngineMatch {
     public Game getGame() {
         return game;
     }
+
+    public UUID getPlayerId() {
+        return playerId;
+    }
+    public String getEngineId() {
+        return engineId;
+    }
 }

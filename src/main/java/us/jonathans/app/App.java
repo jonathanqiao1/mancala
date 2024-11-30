@@ -1,50 +1,75 @@
 package us.jonathans.app;
 
 import us.jonathans.data_access.leaderboard.LeaderboardRepository;
-import us.jonathans.data_access.match.InMemoryMatchDataAccess;
-import us.jonathans.data_access.user.InMemoryUserDataAccess;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchController;
+import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardPresenter;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
+import us.jonathans.interface_adapter.notifyuser.NotificationService;
+import us.jonathans.interface_adapter.notifyuser.NotifyUserController;
+import us.jonathans.interface_adapter.notifyuser.NotifyUserPresenter;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardController;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardPresenter;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
-import us.jonathans.interface_adapter.start_game.StartGamePresenter;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
+import us.jonathans.use_case.notify_user.NotifyUserInputBoundary;
+import us.jonathans.use_case.notify_user.NotifyUserInputData;
+import us.jonathans.use_case.notify_user.NotifyUserInteractor;
+import us.jonathans.use_case.notify_user.NotifyUserOutputBoundary;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
-import us.jonathans.use_case.start_game.StartGameInteractor;
-import us.jonathans.view.GetLeaderboardView;
-import us.jonathans.view.JMancalaPanel;
 import us.jonathans.view.MainView;
 import us.jonathans.view.PostLeaderboardView;
+import us.jonathans.view.TwilioNotificationService;
 
+import javax.management.Notification;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class App implements KeyListener {
     private final JFrame frame = new JFrame(Config.APP_NAME);
-    private final StartGameViewModel startGameViewModel = new StartGameViewModel();
-    private final JMancalaPanel mancalaPanel = new JMancalaPanel(frame, startGameViewModel);
+    private StartGameViewModel startGameViewModel;
     private GetLeaderboardViewModel getLeaderboardViewModel;
     private PostLeaderboardViewModel postLeaderboardViewModel;
-    private GetLeaderboardView getLeaderboardView;
+    private MakePlayerMoveViewModel makePlayerMoveViewModel;
+    private MakePlayerMoveController makePlayerMoveController;
 
-    public App() {
+    public App(
+            StartGameController startGameController,
+            StartGameViewModel startGameViewModel,
+            GetLeaderboardController getLeaderboardController,
+            GetLeaderboardViewModel getLeaderboardViewModel,
+            MakePlayerMoveViewModel makePlayerMoveViewModel,
+            MakePlayerMoveController makePlayerMoveController,
+            MakeComputerMoveController makeComputerMoveController,
+            MakeComputerMoveViewModel makeComputerMoveViewModel,
+            CancelMatchController cancelMatchController,
+            CancelMatchViewModel cancelMatchViewModel
+    ) {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        frame.setUndecorated(true);
-//        frame.setContentPane(mancalaPanel);
-        JPanel mainView = new MainView();
-//        mainView.setLayout(new BorderLayout());
-        mainView.setBackground(Color.GRAY);
-        frame.setContentPane(mainView);
-
         frame.addKeyListener(this);
+        JPanel mainView = new MainView(
+                startGameController,
+                startGameViewModel,
+                getLeaderboardController,
+                getLeaderboardViewModel,
+                makePlayerMoveViewModel,
+                makePlayerMoveController,
+                makeComputerMoveController,
+                makeComputerMoveViewModel,
+                cancelMatchController,
+                cancelMatchViewModel
+        );
+        frame.setContentPane(mainView);
     }
 
 
@@ -52,7 +77,7 @@ public class App implements KeyListener {
         frame.setVisible(true);
         addGetLeaderboardUseCase();
         addGetLeaderboardView();
-        addStartGameUseCase();
+        notifyUserUseCase();
     }
 
     public void close() {
@@ -79,17 +104,35 @@ public class App implements KeyListener {
 
     public void addGetLeaderboardUseCase() {
         LeaderboardRepository repository = new LeaderboardRepository();
-        getLeaderboardViewModel = new GetLeaderboardViewModel("leaderboard");
+        getLeaderboardViewModel = new GetLeaderboardViewModel();
         GetLeaderboardOutputBoundary presenter = new GetLeaderboardPresenter(getLeaderboardViewModel);
         GetLeaderboardInteractor interactor = new GetLeaderboardInteractor(repository, presenter);
         GetLeaderboardController controller = new GetLeaderboardController(interactor);
-
-        mancalaPanel.setGetLeaderboardController(controller);
     }
 
     public void addGetLeaderboardView(){
-        getLeaderboardView = new GetLeaderboardView(getLeaderboardViewModel);
+//        getLeaderboardView = new GetLeaderboardView(getLeaderboardViewModel);
     }
+
+
+    public void notifyUserUseCase() {
+        LeaderboardRepository repository = new LeaderboardRepository();
+        NotificationService notificationService = new TwilioNotificationService(
+                System.getenv("ACCOUNT_SID"),
+                System.getenv("AUTH_TOKEN"),
+                System.getenv("TWILIO_NUMBER")
+        );
+        NotifyUserOutputBoundary presenter = new NotifyUserPresenter(notificationService);
+        NotifyUserInputBoundary interactor = new NotifyUserInteractor(repository, presenter);
+        NotifyUserController controller = new NotifyUserController(interactor);
+
+        String phoneNumber = "User Phone Number should go here";
+        String username = "User Name should go here";
+
+        controller.notifyUser(phoneNumber, username);
+    }
+
+
 
     public void addPostLeaderboardUseCase(){
         LeaderboardRepository repository = new LeaderboardRepository();
@@ -107,15 +150,5 @@ public class App implements KeyListener {
         //postLeaderboardController.execute("Bob", "Alice", 22);
     }
 
-    public void addStartGameUseCase() {
-        mancalaPanel.setStartGameController(
-                new StartGameController(
-                        new StartGameInteractor(
-                                InMemoryMatchDataAccess.getInstance(),
-                                InMemoryUserDataAccess.getInstance(),
-                                new StartGamePresenter(startGameViewModel)
-                        )
-                )
-        );
-    }
+
 }

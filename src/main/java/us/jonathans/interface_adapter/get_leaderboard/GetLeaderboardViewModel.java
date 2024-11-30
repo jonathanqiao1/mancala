@@ -7,8 +7,8 @@ public class GetLeaderboardViewModel {
     private final String viewName;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public GetLeaderboardViewModel(String viewName) {
-        this.viewName = viewName;
+    public GetLeaderboardViewModel() {
+        this.viewName = "leaderboard";
     }
 
     public void firePropertyChanged(String viewName, Object newValue) {
