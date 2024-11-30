@@ -19,14 +19,12 @@ public class MakePlayerMoveInteractor implements MakePlayerMoveInputBoundary {
     @Override
     public void execute(MakePlayerMoveInputData inputData) {
         Game game = matchDataAccessObject.getCurrentMatch().getGame();
-        MoveResult result = game.getRuleSet().makeMove(
-                game.getBoard(),
-                inputData.getMancalaSide(),
+        Boolean success = game.makeMove(
                 inputData.getMancalaHole()
         );
         makePlayerMovePresenter.presentUpdatedBoard(new MakePlayerMoveOutputData(
                 game.getBoard(),
-                result
+                success
         ));
     }
 }
