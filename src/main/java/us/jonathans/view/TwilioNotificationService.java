@@ -19,15 +19,10 @@ public class TwilioNotificationService implements NotificationService {
 
     @Override
     public void sendNotification(String phoneNumber, String message) {
-        try {
-            Message sentMessage = Message.creator(
-                    new PhoneNumber(phoneNumber),
-                    new PhoneNumber(twilioPhoneNumber),
-                    message
-            ).create();
-            System.out.println("Message sent! SID: " + sentMessage.getSid());
-        } catch (Exception e) {
-            System.err.println("Failed to send message: " + e.getMessage());
-        }
+        Message.creator(
+                new PhoneNumber(phoneNumber),
+                new PhoneNumber(twilioPhoneNumber),
+                message
+        ).create();
     }
 }

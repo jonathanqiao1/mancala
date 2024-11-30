@@ -11,33 +11,36 @@ public class NotifyUserInteractor implements NotifyUserInputBoundary{
         this.notifyUserOutputBoundary = notifyUserOutputBoundary;
     }
 
+
+    //Sends an SMS message to the user informing them of their position on the leaderboard
     @Override
     public void execute(NotifyUserInputData notifyUserInputData) {
-        Integer rank = leaderboardRepository.getRank(notifyUserInputData.getUsername());
+        int rank = leaderboardRepository.getLeaderboard().getRank(notifyUserInputData.getUsername());
 
         String message;
 
-        if (rank != null) {
+        if (rank != -1) {
             if (rank == 3) {
-                message = String.format("Congratulations on finishing your Jacala game %s! \n " +
-                        "You are currently ranked %drd on the leaderboard!", notifyUserInputData.getUsername(), rank);
+                message = String.format("Congratulations on finishing your Jacala game %s! \n" +
+                        "\nYou are currently ranked %drd on the leaderboard!", notifyUserInputData.getUsername(), rank);
             }
             else if (rank == 2) {
-                message = String.format("Congratulations on finishing your Jacala game %s! \n " +
-                        "You are currently ranked %dnd on the leaderboard!", notifyUserInputData.getUsername(), rank);
+                message = String.format("Congratulations on finishing your Jacala game %s! \n" +
+                        "\nYou are currently ranked %dnd on the leaderboard!", notifyUserInputData.getUsername(), rank);
             }
             else if (rank == 1) {
-                message = String.format("Congratulations on finishing your Jacala game %s or shall I say Jacala Grandmaster! \n " +
-                        "You are currently ranked %dst on the leaderboard!", notifyUserInputData.getUsername(), rank);
+                message = String.format("Congratulations on finishing your Jacala game %s or shall I say Jacala Grandmaster! \n" +
+                        "\nYou are currently ranked %dst on the leaderboard!", notifyUserInputData.getUsername(), rank);
             }
             else {
-                message = String.format("Congratulations on finishing your Jacala game %s! \n" +
-                        "You are currently ranked %dth on the leaderboard!", notifyUserInputData.getUsername(), rank);
+                message = String.format("Congratulations on finishing your Jacala game %s!\n" +
+                        "\nYou are currently ranked %dth on the leaderboard!", notifyUserInputData.getUsername(), rank);
             }
         }
         else {
-            message = String.format("Congratulations on finishing your Jacala game %d! \n" +
-                    "Consider posting your results to the leaderboard to know your ranking next time!", notifyUserInputData.getUsername());
+            message = String.format("Congratulations on finishing your Jacala game %s!\n" +
+                    "\nConsider posting your results to the leaderboard to know your ranking next time!",
+                    notifyUserInputData.getUsername());
         }
 
         notifyUserOutputBoundary.notifyUser(notifyUserInputData.getPhoneNumber(), message);
