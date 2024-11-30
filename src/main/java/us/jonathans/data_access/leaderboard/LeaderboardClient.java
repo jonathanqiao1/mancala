@@ -1,4 +1,4 @@
-package us.jonathans.data_access;
+package us.jonathans.data_access.leaderboard;
 
 import java.io.IOException;
 import java.net.URI;
@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class LeaderboardClient {
     private static final String API_KEY = System.getenv("LEADERBOARD_API_KEY");        // ADD API KEY for the leaderboard API
-    private static final String BASE_URL = System.getenv("LEADERBOARD_URL");           // ADD URL for the leaderboard API
+    private static final String BASE_URL = System.getenv("LEADERBOARD_URL");        // ADD URL for the leaderboard API
 
     private static HttpClient httpClient = HttpClient.newHttpClient();
 
