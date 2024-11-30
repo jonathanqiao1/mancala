@@ -25,7 +25,7 @@ public class MainView extends JPanel {
             GetLeaderboardController getLeaderboardController,
             GetLeaderboardViewModel getLeaderboardViewModel,
             MakeComputerMoveController makeComputerMoveController,
-            MakeComputerMoveViewModel makeComputerMoveViewModel
+            MakeComputerMoveViewModel makeComputerMoveViewModel,
             CancelMatchController cancelMatchController,
             CancelMatchViewModel cancelMatchViewModel
     ) {
@@ -44,7 +44,7 @@ public class MainView extends JPanel {
         add(new GameView(
                 startGameViewModel,
                 makeComputerMoveController,
-                makeComputerMoveViewModel
+                makeComputerMoveViewModel,
                 cancelMatchViewModel
         ));
     }

@@ -42,7 +42,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
             Container frame,
             StartGameViewModel startGameViewModel,
             MakeComputerMoveController makeComputerMoveController,
-            MakeComputerMoveViewModel makeComputerMoveViewModel
+            MakeComputerMoveViewModel makeComputerMoveViewModel,
             CancelMatchViewModel cancelMatchViewModel
     ) {
         super();
@@ -205,22 +205,20 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getNewValue() instanceof StartGameState) {
-            final StartGameState state = (StartGameState) evt.getNewValue();
+        if (evt.getNewValue() instanceof StartGameState state) {
             if (state.isSuccessful()) {
                 this.board = state.getBoard();
                 initSprites();
                 repaint();
             }
-        }
-        else if(evt.getNewValue() instanceof MakeComputerMoveState) {
-            final MakeComputerMoveState state = (MakeComputerMoveState) evt.getNewValue();
+        } else if(evt.getNewValue() instanceof MakeComputerMoveState state) {
             this.board = state.getBoard();
+            initSprites();
+            repaint();
         } else if (evt.getNewValue() instanceof CancelMatchState) {
             this.board = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
             initSprites();
             repaint();
         }
-
     }
 }

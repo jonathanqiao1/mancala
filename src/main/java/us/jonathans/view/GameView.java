@@ -14,11 +14,17 @@ public class GameView extends JPanel {
     public GameView(
             StartGameViewModel startGameViewModel,
             MakeComputerMoveController makeComputerMoveController,
-            MakeComputerMoveViewModel makeComputerMoveViewModel),
+            MakeComputerMoveViewModel makeComputerMoveViewModel,
             CancelMatchViewModel cancelMatchViewModel
-        {
+    ) {
         setBorder(BorderFactory.createTitledBorder(viewName));
         setLayout(new GridLayout());
-        add(new JMancalaPanel(this, startGameViewModel, makeComputerMoveController, makeComputerMoveViewModel, cancelMatchViewModel));
+        add(new JMancalaPanel(
+                this,
+                startGameViewModel,
+                makeComputerMoveController,
+                makeComputerMoveViewModel,
+                cancelMatchViewModel
+        ));
     }
 }

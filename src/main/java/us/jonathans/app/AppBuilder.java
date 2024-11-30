@@ -82,7 +82,7 @@ public class AppBuilder {
                 getLeaderboardController,
                 getLeaderboardViewModel,
                 makeComputerMoveController,
-                makeComputerMoveViewModel
+                makeComputerMoveViewModel,
                 cancelMatchController,
                 cancelMatchViewModel
         );

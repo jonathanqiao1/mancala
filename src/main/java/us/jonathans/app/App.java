@@ -35,7 +35,7 @@ public class App implements KeyListener {
             GetLeaderboardController getLeaderboardController,
             GetLeaderboardViewModel getLeaderboardViewModel,
             MakeComputerMoveController makeComputerMoveController,
-            MakeComputerMoveViewModel makeComputerMoveViewModel
+            MakeComputerMoveViewModel makeComputerMoveViewModel,
             CancelMatchController cancelMatchController,
             CancelMatchViewModel cancelMatchViewModel
     ) {
@@ -48,7 +48,7 @@ public class App implements KeyListener {
                 getLeaderboardController,
                 getLeaderboardViewModel,
                 makeComputerMoveController,
-                makeComputerMoveViewModel
+                makeComputerMoveViewModel,
                 cancelMatchController,
                 cancelMatchViewModel
         );
