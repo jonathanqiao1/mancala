@@ -5,5 +5,5 @@ import us.jonathans.entity.rule.MoveResult;
 
 public record MakePlayerMoveOutputData (
     MancalaBoard board,
-    MoveResult result
+    Boolean success
 ){}

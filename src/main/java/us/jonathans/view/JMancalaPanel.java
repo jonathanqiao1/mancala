@@ -279,7 +279,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         }
         if (evt.getNewValue() instanceof MakePlayerMoveState) {
             MakePlayerMoveState makePlayerMoveState = (MakePlayerMoveState) evt.getNewValue();
-            if (makePlayerMoveState.getMoveResult().isLegal()) {
+            if (makePlayerMoveState.getSuccess()) {
                 this.board = fixBoard(makePlayerMoveState.getBoard());
                 initSprites();
                 repaint();
