@@ -1,16 +1,14 @@
-package us.jonathans.unit.leaderboard;
+package us.jonathans.interface_adapter.get_leaderboard;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 import us.jonathans.entity.leaderboard.Leaderboard;
-import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardPresenter;
-import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 
 import java.util.Arrays;
 
-public class GetLeaderboardDataTest {
+class GetLeaderboardPresenterTest {
 
     @Test
-    public void testPresenterGetLeaderboardData() {
+    void getLeaderboardData() {
         Leaderboard leaderboard = new Leaderboard();
         leaderboard.add("Bob", "Alice", 32, 1731981570);
         leaderboard.add("Matt", "Liam", 31, 1731982658);
