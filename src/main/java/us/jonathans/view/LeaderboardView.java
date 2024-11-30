@@ -10,6 +10,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 
 public class LeaderboardView extends JPanel implements PropertyChangeListener {
     private final static String viewName = "Leaderboard";
@@ -54,8 +55,12 @@ public class LeaderboardView extends JPanel implements PropertyChangeListener {
 
     public void propertyChange(PropertyChangeEvent evt) {
         if ("leaderboard".equals(evt.getPropertyName())) {
-            tableRows = (String[][]) evt.getNewValue();
-            leaderboardTable.setModel(buildTableModel());
+            String[][] newTableRows = (String[][]) evt.getNewValue();
+            // Only update the leaderboard model if the leaderboard has new data
+            if (!Arrays.deepEquals(newTableRows, tableRows)) {
+                tableRows = newTableRows;
+                leaderboardTable.setModel(buildTableModel());
+            }
         }
     }
 }
