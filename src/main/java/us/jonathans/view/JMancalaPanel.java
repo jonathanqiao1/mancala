@@ -7,6 +7,12 @@ import us.jonathans.entity.rendering.sprite.Hole;
 import us.jonathans.entity.rendering.sprite.SquareHole;
 import us.jonathans.entity.rendering.sprite.Stone;
 import us.jonathans.entity.rendering.sprite.StoneColors;
+import us.jonathans.entity.rule.MancalaBoard;
+import us.jonathans.entity.rule.MancalaHole;
+import us.jonathans.entity.rule.MancalaSide;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveState;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.cancel_match.CancelMatchState;
 import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameState;
@@ -18,6 +24,7 @@ import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewMod
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -26,6 +33,8 @@ import java.util.Random;
 
 public class JMancalaPanel extends JPanel implements MouseMotionListener, PropertyChangeListener {
     private final StartGameViewModel startGameViewModel;
+    private final MakePlayerMoveViewModel makePlayerMoveViewModel;
+    private final MakePlayerMoveController makePlayerMoveController;
     private final CancelMatchViewModel cancelMatchViewModel;
     private final String viewName = "mancala_panel";
     private final MakeComputerMoveViewModel makeComputerMoveViewModel;
@@ -38,16 +47,22 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     private Container parent;
     private Dimension lastSize;
 
+
     public JMancalaPanel(
             Container frame,
             StartGameViewModel startGameViewModel,
+            MakePlayerMoveViewModel makePlayerMoveViewModel,
+            MakePlayerMoveController makePlayerMoveController,
             MakeComputerMoveController makeComputerMoveController,
             MakeComputerMoveViewModel makeComputerMoveViewModel,
             CancelMatchViewModel cancelMatchViewModel
     ) {
         super();
         this.startGameViewModel = startGameViewModel;
+        this.makePlayerMoveViewModel = makePlayerMoveViewModel;
+        this.makePlayerMoveController = makePlayerMoveController;
         this.startGameViewModel.addPropertyChangeListener(this);
+        this.makePlayerMoveViewModel.addPropertyChangeListener(this);
         this.makeComputerMoveController = makeComputerMoveController;
         this.makeComputerMoveViewModel = makeComputerMoveViewModel;
         this.makeComputerMoveViewModel.addPropertyChangeListener(this);
@@ -58,6 +73,42 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         this.setDoubleBuffered(true);
         lastSize = this.getPreferredSize();
         initSprites();
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+
+                for (Hole hole : holes) {
+                    if (hole.contains(x, y)) {
+                        makePlayerMoveController.execute(
+                                MancalaSide.PLAYER1,
+                                MancalaHole.getHole(hole.getId())
+                        );
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         JButton button = new JButton(viewName);
         button.addActionListener(_ -> {
             this.makeComputerMoveController.execute();
@@ -124,7 +175,9 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 cellHeight,
                 Align.CENTER,
                 -1
+
         );
+
         this.bottomHole = new SquareHole(
                 getPreferredSize().width / 2,
                 cellHeight * 7 + cellHeight / 2,
@@ -133,6 +186,36 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 Align.CENTER,
                 -1
         );
+
+        int nStones = board[13];
+        for (int i = 0; i < nStones; i++) {
+            Vec2 stonePos = pointInsideSquare(topHole, stoneRadius, r);
+            stones.add(
+                    new Stone(
+                            stonePos.x,
+                            stonePos.y,
+                            stoneRadius * 2,
+                            stoneRadius * 2,
+                            Align.CENTER,
+                            StoneColors.getRandom(r)
+                    )
+            );
+        }
+
+        nStones = board[6];
+        for (int i = 0; i < nStones; i++) {
+            Vec2 stonePos = pointInsideSquare(bottomHole, stoneRadius, r);
+            stones.add(
+                    new Stone(
+                            stonePos.x,
+                            stonePos.y,
+                            stoneRadius * 2,
+                            stoneRadius * 2,
+                            Align.CENTER,
+                            StoneColors.getRandom(r)
+                    )
+            );
+        }
     }
 
     @Override
@@ -187,6 +270,15 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         );
     }
 
+    private Vec2 pointInsideSquare(Obj2 obj, int radius, Random r) {
+        double radians = 2.0d * Math.PI * r.nextDouble(1.0d);
+        double deviation = (obj.height() / 2 - radius) * Math.sqrt(r.nextDouble(1.0d));
+        return new Vec2(
+                (int) (obj.cx() + deviation * Math.cos(radians)),
+                (int) (obj.cy() + deviation * Math.sin(radians))
+        );
+    }
+
     @Override
     public Dimension getPreferredSize() {
         return this.parent.getSize();
@@ -202,12 +294,18 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         repaint();
     }
 
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getNewValue() instanceof StartGameState state) {
             if (state.isSuccessful()) {
                 this.board = state.getBoard();
+                initSprites();
+                repaint();
+            }
+        }
+        } else if (evt.getNewValue() instanceof MakePlayerMoveState makePlayerMoveState) {
+            if (makePlayerMoveState.getMoveResult().isLegal()) {
+                this.board = fixBoard(makePlayerMoveState.getBoard());
                 initSprites();
                 repaint();
             }
@@ -221,4 +319,25 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
             repaint();
         }
     }
+
+    private int[] fixBoard(int[] board) {
+        return new int[] {
+                board[7],
+                board[8],
+                board[9],
+                board[10],
+                board[11],
+                board[12],
+                board[13],
+                board[5],
+                board[4],
+                board[3],
+                board[2],
+                board[1],
+                board[0],
+                board[6]
+        };
+    }
+
+
 }

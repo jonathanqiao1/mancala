@@ -9,6 +9,9 @@ import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardPresenter;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMovePresenter;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGamePresenter;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
@@ -17,6 +20,7 @@ import us.jonathans.interface_adapter.make_computer_move.MakeComputerMovePresent
 import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 import us.jonathans.use_case.cancel_match.CancelMatchInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
+import us.jonathans.use_case.make_player_move.MakePlayerMoveInteractor;
 import us.jonathans.use_case.make_computer_move.MakeComputerMoveInteractor;
 import us.jonathans.use_case.start_game.StartGameInteractor;
 
@@ -25,6 +29,8 @@ public class AppBuilder {
     private StartGameController startGameController;
     private GetLeaderboardViewModel getLeaderboardViewModel;
     private GetLeaderboardController getLeaderboardController;
+    private MakePlayerMoveViewModel makePlayerMoveViewModel;
+    private MakePlayerMoveController makePlayerMoveController;
     private MakeComputerMoveViewModel makeComputerMoveViewModel;
     private MakeComputerMoveController makeComputerMoveController;
     private CancelMatchViewModel cancelMatchViewModel;
@@ -64,6 +70,17 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addMakePlayerMoveUseCase() {
+        makePlayerMoveViewModel = new MakePlayerMoveViewModel();
+        makePlayerMoveController = new MakePlayerMoveController(
+                new MakePlayerMoveInteractor(
+                        InMemoryMatchDataAccess.getInstance(),
+                        new MakePlayerMovePresenter(makePlayerMoveViewModel)
+                )
+        );
+        return this;
+    }
+  
     public AppBuilder addMakeComputerMoveUseCase() {
         makeComputerMoveViewModel = new MakeComputerMoveViewModel();
         makeComputerMoveController = new MakeComputerMoveController(
@@ -81,6 +98,8 @@ public class AppBuilder {
                 startGameViewModel,
                 getLeaderboardController,
                 getLeaderboardViewModel,
+                makePlayerMoveViewModel,
+                makePlayerMoveController,
                 makeComputerMoveController,
                 makeComputerMoveViewModel,
                 cancelMatchController,

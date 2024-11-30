@@ -8,6 +8,7 @@ public class Main {
         App app = new AppBuilder()
                 .addStartGameUseCase()
                 .addLeaderboardUseCase()
+                .addMakePlayerMoveUseCase()
                 .addMakeComputerMoveUseCase()
                 .addCancelMatchUseCase()
                 .build();
