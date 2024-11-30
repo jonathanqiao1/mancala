@@ -43,4 +43,19 @@ public class Leaderboard {
 
         return sortedData;
     }
+
+    // Returns the rank on the leaderboard of the user
+    public int getRank(String username) {
+
+        Map<String, ArrayList<Object>> sortedData = sort();
+        int rank = 1;
+
+        for (String key : sortedData.keySet()) {
+            if (key.equals(username)) {
+                return rank;
+            }
+            rank++;
+        }
+        return -1;
+    }
 }
