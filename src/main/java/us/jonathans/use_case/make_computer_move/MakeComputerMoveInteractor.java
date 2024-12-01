@@ -7,6 +7,8 @@ import us.jonathans.entity.match.EngineMatch;
 import us.jonathans.entity.rule.Game;
 import us.jonathans.entity.rule.MancalaHole;
 
+import java.util.logging.Logger;
+
 public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary{
 
     private final MatchDataAccessInterface matchDataAccessInterface;
@@ -22,12 +24,12 @@ public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary
 
     @Override
     public void execute(MakeComputerMoveInputData inputData) {
-        EngineManager engineManager = new EngineManager();
+        Logger.getLogger("computer move use case").info("Making an engine move");
         EngineMatch match = matchDataAccessInterface.getCurrentMatch();
         Game game = match.getGame();
-        Engine engine = engineManager.getEngine(match.getEngineId(), game.getRuleSet());
+        Engine engine = new EngineManager().getEngine(match.getEngineId(), game.getRuleSet());
         MancalaHole bestMove = engine.findBestMove(game.getBoard(), game.getCurrentSide());
-        game.getRuleSet().makeMove(game.getBoard(), game.getCurrentSide(), bestMove);
+        game.makeMove(bestMove);
         makeComputerMovePresenter.prepareSuccessView(
                 new MakeComputerMoveOutputData(game.getBoard().asArray())
         );

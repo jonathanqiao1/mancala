@@ -57,7 +57,10 @@ public class JonathanMancalaRuleSet implements MancalaRuleSet {
             goalPosition = MancalaHole.g;
         }
 
-        if (board.getStones(hole) == 1 && getLegalMoves(board, player).contains(hole)) {
+        if (board.getStones(hole) == 1
+                && getLegalMoves(board, player).contains(hole)
+                && board.getStones(board.getOppositeHole(hole)) > 0
+        ) {
             board.setStones(hole, 0);
             board.setStones(
                     goalPosition,
