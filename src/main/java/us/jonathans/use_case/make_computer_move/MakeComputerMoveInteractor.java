@@ -10,10 +10,8 @@ import us.jonathans.entity.rule.MancalaHole;
 import java.util.logging.Logger;
 
 public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary{
-
     private final MatchDataAccessInterface matchDataAccessInterface;
     private final MakeComputerMoveOutputBoundary makeComputerMovePresenter;
-
 
     public MakeComputerMoveInteractor (MatchDataAccessInterface matchDataAccessInterface,
                                        MakeComputerMoveOutputBoundary makeComputerMoveOutputBoundary) {
@@ -22,6 +20,8 @@ public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary
 
     }
 
+    // Executes the logic for making a computer move: determines the best move using the engine,
+    // applies it, and updates the presenter with the new game state.
     @Override
     public void execute(MakeComputerMoveInputData inputData) {
         Logger.getLogger("computer move use case").info("Making an engine move");
@@ -29,12 +29,12 @@ public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary
         Game game = match.getGame();
         Engine engine = new EngineManager().getEngine(match.getEngineId(), game.getRuleSet());
         MancalaHole bestMove = engine.findBestMove(game.getBoard(), game.getCurrentSide());
+        if (bestMove == null) {
+            throw new IllegalStateException("No valid move was determined by the AI.");
+        }
         game.makeMove(bestMove);
         makeComputerMovePresenter.prepareSuccessView(
                 new MakeComputerMoveOutputData(game.getBoard().asArray())
         );
     }
-
-
-
 }

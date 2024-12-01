@@ -50,7 +50,6 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     private int cellHeight = 0;
     private final int initialRandomSeed = new Random().nextInt();
 
-
     public JMancalaPanel(
             Container frame,
             StartGameViewModel startGameViewModel,

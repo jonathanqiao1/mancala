@@ -2,7 +2,6 @@ package us.jonathans.entity.match;
 
 import us.jonathans.entity.rule.Game;
 import us.jonathans.entity.rule.MancalaSide;
-
 import java.util.UUID;
 
 public class EngineMatch {
