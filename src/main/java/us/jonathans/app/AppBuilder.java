@@ -12,6 +12,9 @@ import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMovePresenter;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
+import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardController;
+import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardPresenter;
+import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGamePresenter;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
@@ -20,9 +23,12 @@ import us.jonathans.interface_adapter.make_computer_move.MakeComputerMovePresent
 import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 import us.jonathans.use_case.cancel_match.CancelMatchInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
 import us.jonathans.use_case.make_player_move.MakePlayerMoveInteractor;
 import us.jonathans.use_case.make_computer_move.MakeComputerMoveInteractor;
+import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
 import us.jonathans.use_case.start_game.StartGameInteractor;
+import us.jonathans.view.PostLeaderboardView;
 
 public class AppBuilder {
     private StartGameViewModel startGameViewModel;
@@ -35,6 +41,8 @@ public class AppBuilder {
     private MakeComputerMoveController makeComputerMoveController;
     private CancelMatchViewModel cancelMatchViewModel;
     private CancelMatchController cancelMatchController;
+    private PostLeaderboardViewModel postLeaderboardViewModel;
+    private PostLeaderboardController postLeaderboardController;
 
     public AppBuilder addStartGameUseCase() {
         startGameViewModel = new StartGameViewModel();
@@ -70,6 +78,22 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addPostLeaderboardUseCase(){
+        postLeaderboardViewModel = new PostLeaderboardViewModel("postLeaderboard");
+        postLeaderboardController = new PostLeaderboardController(
+                new PostLeaderboardInteractor(
+                        new LeaderboardRepository(),
+                        new PostLeaderboardPresenter(postLeaderboardViewModel)
+                )
+        );
+        return this;
+    }
+
+    public AppBuilder addPostLeaderboardView() {
+        PostLeaderboardView view = new PostLeaderboardView(postLeaderboardViewModel);
+        return this;
+    }
+
     public AppBuilder addMakePlayerMoveUseCase() {
         makePlayerMoveViewModel = new MakePlayerMoveViewModel();
         makePlayerMoveController = new MakePlayerMoveController(
@@ -98,6 +122,8 @@ public class AppBuilder {
                 startGameViewModel,
                 getLeaderboardController,
                 getLeaderboardViewModel,
+                postLeaderboardController,
+                postLeaderboardViewModel,
                 makePlayerMoveViewModel,
                 makePlayerMoveController,
                 makeComputerMoveController,
