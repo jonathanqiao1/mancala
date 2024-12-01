@@ -12,6 +12,8 @@ import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMovePresenter;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
+import us.jonathans.interface_adapter.notifyuser.NotifyUserController;
+import us.jonathans.interface_adapter.notifyuser.NotifyUserPresenter;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGamePresenter;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
@@ -22,7 +24,10 @@ import us.jonathans.use_case.cancel_match.CancelMatchInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
 import us.jonathans.use_case.make_player_move.MakePlayerMoveInteractor;
 import us.jonathans.use_case.make_computer_move.MakeComputerMoveInteractor;
+import us.jonathans.use_case.notify_user.NotifyUserInteractor;
 import us.jonathans.use_case.start_game.StartGameInteractor;
+import us.jonathans.view.TwilioNotificationService;
+import java.util.UUID;
 
 public class AppBuilder {
     private StartGameViewModel startGameViewModel;
@@ -35,6 +40,7 @@ public class AppBuilder {
     private MakeComputerMoveController makeComputerMoveController;
     private CancelMatchViewModel cancelMatchViewModel;
     private CancelMatchController cancelMatchController;
+    private NotifyUserController notifyUserController;
 
     public AppBuilder addStartGameUseCase() {
         startGameViewModel = new StartGameViewModel();
@@ -89,6 +95,27 @@ public class AppBuilder {
                         new MakeComputerMovePresenter(makeComputerMoveViewModel)
                 )
         );
+        return this;
+    }
+
+    public AppBuilder addNotifyUserUseCase() {
+        notifyUserController = new NotifyUserController(
+                new NotifyUserInteractor(
+                        new LeaderboardRepository(),
+                        new NotifyUserPresenter(
+                                new TwilioNotificationService(
+                                System.getenv("ACCOUNT_SID"),
+                                System.getenv("AUTH_TOKEN"),
+                                System.getenv("TWILIO_NUMBER"))
+                )
+        ));
+//        UUID id = InMemoryMatchDataAccess.getInstance().getCurrentMatch().getPlayerId();
+//        User user = InMemoryUserDataAccess.getInstance().getUser(id);
+//        if (user.isUsePhoneNumber()){
+//            String phoneNumber = user.getPhoneNumber();
+//           String username = user.getUsername();
+//            notifyUserController.execute(phoneNumber, username);
+//        }
         return this;
     }
 
