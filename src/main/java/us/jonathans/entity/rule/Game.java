@@ -25,7 +25,7 @@ public class Game {
         );
 
         // Move was rejected by the rule set.
-        if (moveResult == null) {
+        if (!moveResult.isLegal()) {
             return false;
         }
 
