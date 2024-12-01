@@ -14,7 +14,7 @@ public class EngineManager {
         switch (Id) {
             case "minimax_easy":
                 engine = new MancalaMinimax(ruleSet, 3);
-            case "minimax_normal":
+            case "minimax_medium":
                 engine = new MancalaMinimax(ruleSet, 5);
             case "minimax_hard":
                 engine = new MancalaMinimax(ruleSet, 8);
