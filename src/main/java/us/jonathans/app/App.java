@@ -73,26 +73,7 @@ public class App implements KeyListener {
                 cancelMatchViewModel
         );
         frame.setContentPane(mainView);
-
-        Thread.startVirtualThread(() -> {
-            while (true) {
-                EngineMatch engineMatch = InMemoryMatchDataAccess.getInstance().getCurrentMatch();
-                if (engineMatch == null) {
-                    continue;
-                }
-                MancalaSide playerToMove = engineMatch.getGame().getCurrentSide();
-                if (playerToMove == engineMatch.getEngineSide()) {
-                    makeComputerMoveController.execute();
-                    System.out.println("Computer moved");
-                }
-
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        makeComputerMoveController.startComputerMoveThread();
     }
 
 
