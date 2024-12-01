@@ -27,6 +27,9 @@ public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary
         Game game = match.getGame();
         Engine engine = engineManager.getEngine(match.getEngineId(), game.getRuleSet());
         MancalaHole bestMove = engine.findBestMove(game.getBoard(), game.getCurrentSide());
+        if (bestMove == null) {
+            throw new IllegalStateException("No valid move was determined by the AI.");
+        }
         game.getRuleSet().makeMove(game.getBoard(), game.getCurrentSide(), bestMove);
         makeComputerMovePresenter.prepareSuccessView(
                 new MakeComputerMoveOutputData(game.getBoard().asArray())
