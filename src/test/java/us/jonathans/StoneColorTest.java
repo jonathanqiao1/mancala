@@ -1,4 +1,4 @@
-package us.jonathans.unit;
+package us.jonathans;
 
 import org.junit.jupiter.api.Test;
 import us.jonathans.entity.rendering.sprite.StoneColors;

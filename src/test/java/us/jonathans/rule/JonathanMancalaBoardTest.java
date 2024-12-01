@@ -1,4 +1,4 @@
-package us.jonathans.unit.rule;
+package us.jonathans.rule;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
