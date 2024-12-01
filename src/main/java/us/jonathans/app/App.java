@@ -6,17 +6,30 @@ import us.jonathans.interface_adapter.cancel_match.CancelMatchViewModel;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardController;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardPresenter;
 import us.jonathans.interface_adapter.get_leaderboard.GetLeaderboardViewModel;
+import us.jonathans.interface_adapter.notifyuser.NotificationService;
+import us.jonathans.interface_adapter.notifyuser.NotifyUserController;
+import us.jonathans.interface_adapter.notifyuser.NotifyUserPresenter;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveController;
+import us.jonathans.interface_adapter.make_player_move.MakePlayerMoveViewModel;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardController;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardPresenter;
 import us.jonathans.interface_adapter.post_leaderboard.PostLeaderboardViewModel;
 import us.jonathans.interface_adapter.start_game.StartGameController;
 import us.jonathans.interface_adapter.start_game.StartGameViewModel;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveController;
+import us.jonathans.interface_adapter.make_computer_move.MakeComputerMoveViewModel;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
 import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
+import us.jonathans.use_case.notify_user.NotifyUserInputBoundary;
+import us.jonathans.use_case.notify_user.NotifyUserInputData;
+import us.jonathans.use_case.notify_user.NotifyUserInteractor;
+import us.jonathans.use_case.notify_user.NotifyUserOutputBoundary;
 import us.jonathans.use_case.post_leaderboard.PostLeaderboardInteractor;
 import us.jonathans.view.MainView;
 import us.jonathans.view.PostLeaderboardView;
+import us.jonathans.view.TwilioNotificationService;
 
+import javax.management.Notification;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -26,12 +39,18 @@ public class App implements KeyListener {
     private StartGameViewModel startGameViewModel;
     private GetLeaderboardViewModel getLeaderboardViewModel;
     private PostLeaderboardViewModel postLeaderboardViewModel;
+    private MakePlayerMoveViewModel makePlayerMoveViewModel;
+    private MakePlayerMoveController makePlayerMoveController;
 
     public App(
             StartGameController startGameController,
             StartGameViewModel startGameViewModel,
             GetLeaderboardController getLeaderboardController,
             GetLeaderboardViewModel getLeaderboardViewModel,
+            MakePlayerMoveViewModel makePlayerMoveViewModel,
+            MakePlayerMoveController makePlayerMoveController,
+            MakeComputerMoveController makeComputerMoveController,
+            MakeComputerMoveViewModel makeComputerMoveViewModel,
             CancelMatchController cancelMatchController,
             CancelMatchViewModel cancelMatchViewModel
     ) {
@@ -43,6 +62,10 @@ public class App implements KeyListener {
                 startGameViewModel,
                 getLeaderboardController,
                 getLeaderboardViewModel,
+                makePlayerMoveViewModel,
+                makePlayerMoveController,
+                makeComputerMoveController,
+                makeComputerMoveViewModel,
                 cancelMatchController,
                 cancelMatchViewModel
         );
@@ -54,6 +77,7 @@ public class App implements KeyListener {
         frame.setVisible(true);
         addGetLeaderboardUseCase();
         addGetLeaderboardView();
+        notifyUserUseCase();
     }
 
     public void close() {
@@ -89,6 +113,26 @@ public class App implements KeyListener {
     public void addGetLeaderboardView(){
 //        getLeaderboardView = new GetLeaderboardView(getLeaderboardViewModel);
     }
+
+
+    public void notifyUserUseCase() {
+        LeaderboardRepository repository = new LeaderboardRepository();
+        NotificationService notificationService = new TwilioNotificationService(
+                System.getenv("ACCOUNT_SID"),
+                System.getenv("AUTH_TOKEN"),
+                System.getenv("TWILIO_NUMBER")
+        );
+        NotifyUserOutputBoundary presenter = new NotifyUserPresenter(notificationService);
+        NotifyUserInputBoundary interactor = new NotifyUserInteractor(repository, presenter);
+        NotifyUserController controller = new NotifyUserController(interactor);
+
+        String phoneNumber = "User Phone Number should go here";
+        String username = "User Name should go here";
+
+        controller.notifyUser(phoneNumber, username);
+    }
+
+
 
     public void addPostLeaderboardUseCase(){
         LeaderboardRepository repository = new LeaderboardRepository();
