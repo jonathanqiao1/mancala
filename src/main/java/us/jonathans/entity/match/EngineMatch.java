@@ -1,7 +1,6 @@
 package us.jonathans.entity.match;
 
 import us.jonathans.entity.rule.Game;
-
 import java.util.UUID;
 
 public class EngineMatch {
@@ -21,6 +20,7 @@ public class EngineMatch {
     public UUID getPlayerId() {
         return playerId;
     }
+
     public String getEngineId() {
         return engineId;
     }

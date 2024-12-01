@@ -13,5 +13,4 @@ public class MakeComputerMoveController {
     public void execute() {
         makeComputerMoveInteractor.execute(new MakeComputerMoveInputData());
     }
-
 }

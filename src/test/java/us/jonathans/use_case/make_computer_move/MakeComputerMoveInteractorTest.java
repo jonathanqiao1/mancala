@@ -2,21 +2,17 @@ package us.jonathans.use_case.make_computer_move;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import us.jonathans.data_access.engine.EngineManager;
 import us.jonathans.data_access.match.MatchDataAccessInterface;
 import us.jonathans.entity.engine.Engine;
 import us.jonathans.entity.match.EngineMatch;
 import us.jonathans.entity.rule.*;
-
 import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class MakeComputerMoveInteractorTest {
-
     private MatchDataAccessInterface matchDataAccess;
     private MakeComputerMoveOutputBoundary presenter;
     private Engine engine;
@@ -76,7 +72,6 @@ class MakeComputerMoveInteractorTest {
 
         // Verify the presenter was called with the updated board
         verify(presenter).prepareSuccessView(any(MakeComputerMoveOutputData.class));
-
     }
 
     @Test

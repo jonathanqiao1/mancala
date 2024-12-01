@@ -8,10 +8,8 @@ import us.jonathans.entity.rule.Game;
 import us.jonathans.entity.rule.MancalaHole;
 
 public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary{
-
     private final MatchDataAccessInterface matchDataAccessInterface;
     private final MakeComputerMoveOutputBoundary makeComputerMovePresenter;
-
 
     public MakeComputerMoveInteractor (MatchDataAccessInterface matchDataAccessInterface,
                                        MakeComputerMoveOutputBoundary makeComputerMoveOutputBoundary) {
@@ -20,6 +18,8 @@ public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary
 
     }
 
+    // Executes the logic for making a computer move: determines the best move using the engine,
+    // applies it, and updates the presenter with the new game state.
     @Override
     public void execute(MakeComputerMoveInputData inputData) {
         EngineManager engineManager = new EngineManager();
@@ -35,7 +35,4 @@ public class MakeComputerMoveInteractor implements MakeComputerMoveInputBoundary
                 new MakeComputerMoveOutputData(game.getBoard().asArray())
         );
     }
-
-
-
 }

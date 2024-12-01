@@ -7,5 +7,4 @@ public class MakeComputerMoveViewModel extends ViewModel<MakeComputerMoveState> 
     public MakeComputerMoveViewModel() {
         super("make_computer_move");
     }
-
 }

@@ -47,7 +47,6 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     private Container parent;
     private Dimension lastSize;
 
-
     public JMancalaPanel(
             Container frame,
             StartGameViewModel startGameViewModel,
