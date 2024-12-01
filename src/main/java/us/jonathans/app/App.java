@@ -25,7 +25,6 @@ import us.jonathans.use_case.notify_user.NotifyUserOutputBoundary;
 import us.jonathans.view.MainView;
 import us.jonathans.view.TwilioNotificationService;
 
-import javax.management.Notification;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -69,7 +68,6 @@ public class App implements KeyListener {
 
     public void run() {
         frame.setVisible(true);
-        notifyUserUseCase();
     }
 
     public void close() {
@@ -92,22 +90,5 @@ public class App implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
-    }
-
-    public void notifyUserUseCase() {
-        LeaderboardRepository repository = new LeaderboardRepository();
-        NotificationService notificationService = new TwilioNotificationService(
-                System.getenv("ACCOUNT_SID"),
-                System.getenv("AUTH_TOKEN"),
-                System.getenv("TWILIO_NUMBER")
-        );
-        NotifyUserOutputBoundary presenter = new NotifyUserPresenter(notificationService);
-        NotifyUserInputBoundary interactor = new NotifyUserInteractor(repository, presenter);
-        NotifyUserController controller = new NotifyUserController(interactor);
-
-        String phoneNumber = "User Phone Number should go here";
-        String username = "User Name should go here";
-
-        controller.notifyUser(phoneNumber, username);
     }
 }
