@@ -1,4 +1,4 @@
-package us.jonathans.use_case.get_leaderboard;
+package us.jonathans;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import us.jonathans.entity.leaderboard.Leaderboard;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardInteractor;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputBoundary;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardOutputData;
+import us.jonathans.use_case.get_leaderboard.GetLeaderboardRepositoryInterface;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
