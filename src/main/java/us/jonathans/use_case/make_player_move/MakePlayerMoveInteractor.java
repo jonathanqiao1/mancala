@@ -5,6 +5,8 @@ import us.jonathans.entity.rule.Game;
 import us.jonathans.entity.rule.MoveResult;
 import us.jonathans.interface_adapter.make_player_move.MakePlayerMovePresenter;
 
+import java.util.logging.Logger;
+
 public class MakePlayerMoveInteractor implements MakePlayerMoveInputBoundary {
 
     private final MatchDataAccessInterface matchDataAccessObject;
@@ -18,13 +20,14 @@ public class MakePlayerMoveInteractor implements MakePlayerMoveInputBoundary {
 
     @Override
     public void execute(MakePlayerMoveInputData inputData) {
+        Logger.getLogger("player move use case").info("Making a player move");
         Game game = matchDataAccessObject.getCurrentMatch().getGame();
-        Boolean result = game.makeMove(
+        Boolean success = game.makeMove(
                 inputData.getMancalaHole()
         );
         makePlayerMovePresenter.presentUpdatedBoard(new MakePlayerMoveOutputData(
                 game.getBoard(),
-                result
+                success
         ));
     }
 }

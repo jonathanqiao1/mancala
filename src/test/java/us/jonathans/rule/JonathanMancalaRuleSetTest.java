@@ -1,11 +1,10 @@
-package us.jonathans.unit.rule;
+package us.jonathans.rule;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import us.jonathans.entity.rule.*;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 

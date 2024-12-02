@@ -1,5 +1,6 @@
 package us.jonathans.view;
 
+import us.jonathans.app.Config;
 import us.jonathans.entity.rendering.geometry.Obj2;
 import us.jonathans.entity.rendering.geometry.Vec2;
 import us.jonathans.entity.rendering.geometry.Align;
@@ -46,7 +47,8 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     private SquareHole bottomHole;
     private Container parent;
     private Dimension lastSize;
-
+    private int cellHeight = 0;
+    private final int initialRandomSeed = new Random().nextInt();
 
     public JMancalaPanel(
             Container frame,
@@ -109,18 +111,13 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
 
             }
         });
-        JButton button = new JButton(viewName);
-        button.addActionListener(a -> {
-            this.makeComputerMoveController.execute();
-        });
-        this.add(button);
     }
 
     private void initSprites() {
         this.stones.clear();
         this.holes.clear();
 
-        int cellHeight = (getPreferredSize().height - 50) / 8;
+        cellHeight = (getPreferredSize().height - 50) / 8;
         int holeRadius = (int) (cellHeight * 0.9 / 2);
         int marginX = 15;
 
@@ -147,14 +144,19 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                     i
             ));
         }
+        Random r = new Random(initialRandomSeed);
 
         int stoneRadius = 15;
-        Random r = new Random();
-
         holes.forEach(hole -> {
             int nStones = board[hole.getId()];
-            for (int i = 0; i < nStones; i++) {
+            for (int i = 0; i < 20; i++) {
                 Vec2 stonePos = pointInsideCircle(hole, stoneRadius, r);
+                Color color = StoneColors.getRandom(r);
+
+                if (i >= nStones) {
+                    continue;
+                }
+
                 stones.add(
                         new Stone(
                                 stonePos.x,
@@ -162,7 +164,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                                 stoneRadius * 2,
                                 stoneRadius * 2,
                                 Align.CENTER,
-                                StoneColors.getRandom(r)
+                                color
                         )
                 );
             }
@@ -188,8 +190,12 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         );
 
         int nStones = board[13];
-        for (int i = 0; i < nStones; i++) {
+        for (int i = 0; i < 20; i++) {
             Vec2 stonePos = pointInsideSquare(topHole, stoneRadius, r);
+            Color color = StoneColors.getRandom(r);
+            if (i >= nStones) {
+                continue;
+            }
             stones.add(
                     new Stone(
                             stonePos.x,
@@ -197,14 +203,18 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                             stoneRadius * 2,
                             stoneRadius * 2,
                             Align.CENTER,
-                            StoneColors.getRandom(r)
+                            color
                     )
             );
         }
 
         nStones = board[6];
-        for (int i = 0; i < nStones; i++) {
+        for (int i = 0; i < 20; i++) {
             Vec2 stonePos = pointInsideSquare(bottomHole, stoneRadius, r);
+            Color color = StoneColors.getRandom(r);
+            if (i >= nStones) {
+                continue;
+            }
             stones.add(
                     new Stone(
                             stonePos.x,
@@ -212,7 +222,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                             stoneRadius * 2,
                             stoneRadius * 2,
                             Align.CENTER,
-                            StoneColors.getRandom(r)
+                            color
                     )
             );
         }
@@ -221,9 +231,8 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D graphics2D = (Graphics2D) g;
 
-//         Set anti-aliasing
+        Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         graphics2D.setRenderingHint(RenderingHints.KEY_DITHERING,
@@ -233,16 +242,12 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
-        g.setColor(new Color(45, 42, 46));
-        g.fillRect(0, 0, getPreferredSize().width, getPreferredSize().height);
-
         if (lastSize.height != getPreferredSize().height || lastSize.width != getPreferredSize().width) {
             initSprites();
             lastSize = getPreferredSize();
         }
 
         Point mousePoint = this.getMousePosition();
-
         holes.forEach(hole -> {
             if (mousePoint != null) {
                 hole.setHovered(hole.contains(mousePoint.x, mousePoint.y));
@@ -250,15 +255,47 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 hole.setHovered(false);
             }
             hole.draw(g);
-            g.setColor(Color.MAGENTA);
         });
-
         topHole.draw(g);
         bottomHole.draw(g);
 
-        stones.forEach(stone -> {
-            stone.draw(g);
+        if (Config.PAINT_STONES) {
+            stones.forEach(stone -> {
+                stone.draw(g);
+            });
+        }
+
+        if (Config.PAINT_STONE_COUNT) {
+            paintStoneCount(graphics2D);
+        }
+    }
+
+    private void paintStoneCount(Graphics2D graphics2D) {
+        int fontSize = cellHeight / 5;
+        graphics2D.setFont(new Font("Arial", Font.PLAIN, fontSize));
+        graphics2D.setColor(Color.WHITE);
+
+        holes.forEach(hole -> {
+            int nStones = board[hole.getId()];
+            int x = 0;
+            if (hole.getId() < 6) {
+                x = hole.cx() - hole.radius() - fontSize;
+            } else {
+                x = hole.cx() + hole.radius() + 5;
+            }
+            graphics2D.drawString(Integer.toString(nStones), x, hole.cy() + fontSize / 2);
         });
+
+        graphics2D.drawString(
+                Integer.toString(board[13]),
+                topHole.cx() + topHole.radius() + 6,
+                topHole.cy() + fontSize / 2
+        );
+        graphics2D.drawString(
+                Integer.toString(board[6]),
+                bottomHole.cx() - bottomHole.radius() - fontSize,
+                bottomHole.cy() + fontSize / 2
+        );
     }
 
     private Vec2 pointInsideCircle(Obj2 obj, int radius, Random r) {
@@ -303,7 +340,7 @@ public class JMancalaPanel extends JPanel implements MouseMotionListener, Proper
                 repaint();
             }
         } else if (evt.getNewValue() instanceof MakePlayerMoveState makePlayerMoveState) {
-            if (makePlayerMoveState.getMoveResult()) {
+            if (makePlayerMoveState.getSuccess()) {
                 this.board = fixBoard(makePlayerMoveState.getBoard());
                 initSprites();
                 repaint();
