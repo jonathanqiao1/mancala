@@ -14,7 +14,10 @@ public class MakePlayerMoveInteractor implements MakePlayerMoveInputBoundary {
     private final MatchDataAccessInterface matchDataAccessObject;
     private final MakePlayerMoveOutputBoundary makePlayerMovePresenter;
 
-    public MakePlayerMoveInteractor(MatchDataAccessInterface matchDataAccessObject, MakePlayerMoveOutputBoundary makePlayerMovePresenter) {
+    public MakePlayerMoveInteractor(
+            MatchDataAccessInterface matchDataAccessObject,
+            MakePlayerMoveOutputBoundary makePlayerMovePresenter
+    ) {
 
         this.matchDataAccessObject = matchDataAccessObject;
         this.makePlayerMovePresenter = makePlayerMovePresenter;
