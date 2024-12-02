@@ -4,9 +4,11 @@
 
 ## Table of Contents
 - [Purpose](#purpose)
+- [Features of the software](#Features-of-the-software)
 - [Installation Instructions](#installation-instructions)
 - [Usage Guide](#usage-guide)
 - [Feedback](#feedback)
+- [Contribution](#Section-for-Contributions)
 - [Contributors](#contributors)
 
 ---
@@ -27,6 +29,24 @@ Additionally, this project was designed with the following objectives:
 
 ---
 
+## Features of the software
+- **Multiple difficulty levels:** The program offers 3 difficulty levels - Easy, Medium, Hard. This allows user to
+  choose a challenge suited to their skills and experience. You can select the difficulty level using the dropdown menu as
+  shown below, or choose Randomizer3000 if you want a random difficulty level.
+
+<img src="images_used_for_readme/choose_engine.png" alt="choose engine" width="250"/>
+
+- **Cancel game button:**
+  The player can choose to cancel and restart the game at any time.
+
+
+- **View Leaderboard:** The leaderboard is beside the game panel and is constantly being updated, allowing the player to
+  see how they are doing compared to the rest of the players.
+
+
+- **Send message to the user:** If the user chooses to receive SMS messages, they will receive an SMS message after every
+  game they play describing their current rank on the leaderboard.
+
 ## Installation Instructions
 
 To utilize the leaderboard feature, follow these steps:
@@ -41,9 +61,8 @@ To utilize SMS notifications, follow these steps:
     - Visit the [Twilio signup page](https://login.twilio.com/u/signup?state=hKFo2SBqVGtXWkJ3WktFLWlTT3RjRTdDc2ozWDByXy1ES3B2cKFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIDNTcWdTSjlHWUlDb0VPWnN6SmY3NVpzQndMNV9NaGI2o2NpZNkgTW05M1lTTDVSclpmNzdobUlKZFI3QktZYjZPOXV1cks).
     - Be sure to enter the phone number you would like your notifications to be sent to.
     - Complete the verification process to access your `Account SID`, `Auth Token`, and `Twilio Phone Number`.
-   
-    Example Screenshot:
-    
+
+   Example Screenshot:
     <img src="images_used_for_readme/img_2.png" alt="twilio example" width="500"/>
 
 2. **Set up Twilio credentials**:
@@ -88,9 +107,26 @@ Example interface screenshot:
 ---
 
 ## Feedback
-//Mina will do this part
-
 Take the survey here: [Jancala Survey](https://docs.google.com/forms/d/e/1FAIpQLSerZEJWytn4krOZ3ecCrA8d6ycYwIQJCVlRL-O9_T4XPuo3kA/viewform).
+**To ensure your feedback is helpful:**
+
+- Provide clear, concise answers to the questions asked.
+- Ensure your responses are constructive and directly address the specific issues or suggestions.
+- Avoid vague or off-topic comments.
+
+
+**What to Expect After Submitting Feedback:** A contributor will review your feedback promptly. If the feedback is
+reasonable and aligns with the project goals, the team will aim to implement your suggestions in a timely manner.
+
+---
+
+## Section for Contributions
+If you would like to contribute to the project, you can make a fork of the repository on Github and work on it as you
+wish. However, if you wish to have your code merged to this repository, please make a branch on your forked repository
+and work on that branch, following all the naming conventions, code organization, and adhere strictly to clean
+architecture. To make a good pull request, name your branch according to the feature you are working on and write
+descriptive commit messages and title. After you make a pull request, at least two of the contributors would have to
+review and approve your pull request before it can be merged.
 
 ---
 
