@@ -17,9 +17,10 @@ class GetLeaderboardPresenterTest {
         GetLeaderboardPresenter presenter = new GetLeaderboardPresenter(viewModel);
 
         String[][] actual = presenter.getLeaderboardData(leaderboard);
-        String[][] expected = {{"1", "Matt", "Liam", "31", "Mon Nov 18 21:17:38 EST 2024"},
-                {"2", "Bob", "Alice", "32", "Mon Nov 18 20:59:30 EST 2024"}};
-
+        String[][] expected = {
+                {"1", "Bob", "Alice", "32", "Mon Nov 18 20:59:30 EST 2024"},
+                {"2", "Matt", "Liam", "31", "Mon Nov 18 21:17:38 EST 2024"}
+        };
         assert Arrays.deepEquals(actual, expected);
     }
 }
