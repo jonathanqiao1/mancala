@@ -13,6 +13,7 @@ public class Main {
                 .addMakePlayerMoveUseCase()
                 .addMakeComputerMoveUseCase()
                 .addCancelMatchUseCase()
+                .addNotifyUserUseCase()
                 .build();
         app.run();
     }
