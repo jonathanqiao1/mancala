@@ -47,8 +47,6 @@ Additionally, this project was designed with the following objectives:
 - **Send message to the user:** If the user chooses to receive SMS messages, they will receive an SMS message after every
   game they play describing their current rank on the leaderboard.
 
----
-
 ## Installation Instructions
 
 To utilize the leaderboard feature, follow these steps:
@@ -65,7 +63,6 @@ To utilize SMS notifications, follow these steps:
     - Complete the verification process to access your `Account SID`, `Auth Token`, and `Twilio Phone Number`.
 
    Example Screenshot:
-
     <img src="images_used_for_readme/img_2.png" alt="twilio example" width="500"/>
 
 2. **Set up Twilio credentials**:
@@ -120,6 +117,7 @@ Take the survey here: [Jancala Survey](https://docs.google.com/forms/d/e/1FAIpQL
 
 **What to Expect After Submitting Feedback:** A contributor will review your feedback promptly. If the feedback is
 reasonable and aligns with the project goals, the team will aim to implement your suggestions in a timely manner.
+
 ---
 
 ## Section for Contributions
@@ -129,6 +127,7 @@ and work on that branch, following all the naming conventions, code organization
 architecture. To make a good pull request, name your branch according to the feature you are working on and write
 descriptive commit messages and title. After you make a pull request, at least two of the contributors would have to
 review and approve your pull request before it can be merged.
+
 ---
 
 ## Contributors
